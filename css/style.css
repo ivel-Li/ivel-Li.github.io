@@ -184,7 +184,7 @@ body {
 .article-category-link,
 .archive-year,
 .widget-title {
-  text-decoration: ivel Blog;
+  text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #999;
