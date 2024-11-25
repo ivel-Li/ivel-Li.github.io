@@ -112,11 +112,19 @@
 <p>Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。<a href="#refer-anchor-1"><sup>1</sup></a></p>
 <p><strong>Git的特点：</strong><a href="#refer-anchor-2"><sup>2</sup></a></p>
 <ol>
-<li>保存文件修改记录。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。</li>
-<li>标记版本号，便于区分。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号，用这个版本号来进行区分每一次的提交。这个版本号在git当中会使用一个hash值进行唯一区分；这个hash函数使用的是sha1（不仅git使用这个sha1生成hash值，一些著名的软件，如redis、lua等也是使用sha1产生hash值）。</li>
-<li>提供历史版本记录。协同开发的时候，产生的每次提交都会在git上保存有历史版本信息，根据历史版本信息可以追溯到具体代码提交；以及当代码出现bug时可以根据历史版本锁定bug位置。<br>
-可还原到历史指定版本。当代码出现bug时，可以还原到历史指定的版本。</li>
-<li>对比版本差异。使用git diff工具进行比较文件差异</li>
+<li>
+<p><strong>保存文件修改记录</strong>。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。</p>
+</li>
+<li>
+<p><strong>标记版本号，便于区分</strong>。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号，用这个版本号来进行区分每一次的提交。这个版本号在git当中会使用一个hash值进行唯一区分；这个hash函数使用的是sha1（不仅git使用这个sha1生成hash值，一些著名的软件，如redis、lua等也是使用sha1产生hash值）。</p>
+</li>
+<li>
+<p><strong>提供历史版本记录</strong>。协同开发的时候，产生的每次提交都会在git上保存有历史版本信息，根据历史版本信息可以追溯到具体代码提交；以及当代码出现bug时可以根据历史版本锁定bug位置。<br>
+可还原到历史指定版本。当代码出现bug时，可以还原到历史指定的版本。</p>
+</li>
+<li>
+<p><strong>对比版本差异</strong>。使用git diff工具进行比较文件差异</p>
+</li>
 </ol>
 <h2 id="github是什么"><a class="markdownIt-Anchor" href="#github是什么"></a> Github是什么</h2>
 <p>Github是基于Git的在线托管平台，现在是微软旗下公司。Github为开发者们的Git仓库提供托管服务，同时提供社区功能，让用户们可关注其他用户、点赞项目（star）、下载克隆项目（clone）、对项目代码提出改进建议（fork）。</p>
@@ -143,8 +151,10 @@
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/3.jpg" alt="img"></p>
 <pre><code>页面中两项无需打钩。
 </code></pre>
+<hr>
 <p>Git常用命令：<br>
 <img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/4.jpg" alt="img"></p>
+<p><strong>获取到Git工具后，需要完成Git与Github的绑定</strong></p>
 <h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考：</h2>
 <div id="refer-anchor-1"></div>
 - [1] https://blog.csdn.net/black_sneak/article/details/139600633
@@ -153,7 +163,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3wwvykm00012wuufm7wa2il" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3wx2blw0001cguuhlu8794r" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -199,7 +209,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" data-id="cm3wwvykt00062wuueiuv1ac6" data-title="ssh概述" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" data-id="cm3wx2bm30006cguubza6d6i4" data-title="ssh概述" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -629,7 +639,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/" data-id="cm3wwvyku00082wuu7u6l9qkh" data-title="神经网络初始化问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/" data-id="cm3wx2bm50008cguu7v288yk3" data-title="神经网络初始化问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -676,7 +686,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%A4%A7%E7%AC%A8%E7%8C%AA%E5%90%8D%E5%8D%95/" data-id="cm3wwvyl6000l2wuuah7v155m" data-title="大笨猪名单" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%A4%A7%E7%AC%A8%E7%8C%AA%E5%90%8D%E5%8D%95/" data-id="cm3wx2bmh000lcguu7eeu5rcd" data-title="大笨猪名单" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -732,7 +742,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/hello-world/" data-id="cm3wwvykp00032wuucyvb9yo1" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/hello-world/" data-id="cm3wx2blz0003cguuhafq2450" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
