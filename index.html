@@ -134,27 +134,87 @@
 <h3 id="github仓库创建sup1sup"><a class="markdownIt-Anchor" href="#github仓库创建sup1sup"></a> Github仓库创建：<a href="#refer-anchor-1"><sup>1</sup></a></h3>
 <p>登录Github账户后，选择页面左上角菜单栏，然后选择 New （新建仓库）。</p>
 <p>可参考：</p>
-<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/1.jpg" alt="img"></p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/1.jpg" alt="建立仓库"></p>
 <p>选择填写以下内容：<br>
-<img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/2.jpg" alt="img"></p>
-<p>接着Create repository（创建仓库）。</p>
+<img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/2.jpg" alt="建立仓库时的配置"></p>
+<p>（tips：README文件一般用来让用户介绍该仓库的内容与使用方法）</p>
+<p>接着选择右下角Create repository（创建仓库）。</p>
 <h3 id="git与github绑定"><a class="markdownIt-Anchor" href="#git与github绑定"></a> Git与Github绑定</h3>
 <p>创建仓库后，需要自己本地的电脑克隆一个库，方便将代码同步到Github上的仓库，为此需要先安装git工具。</p>
 <p>在Linux上安装 git：</p>
 <p>如果在ubuntu或者Debian系统：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
 <p>如果在CentOS或者Fedora系统：</p>
- <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
 <p>在Windows上，则需要使用Git fow windows软件，来帮助用户使用命令行工具（Git Bash）来执行Windows应用于访问Winodows文件。此外，Git Bash还拥有着使用SSH进行远程操作的能力。</p>
 <p>在Git官网（<a target="_blank" rel="noopener" href="https://git-scm.com/downloads%EF%BC%89">https://git-scm.com/downloads）</a><br>
-下载Windows版本，最后弹出页面：</p>
-<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/3.jpg" alt="img"></p>
-<pre><code>页面中两项无需打钩。
+下载对应的Windows版本，依次点击下一步，最后弹出页面：</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/3.jpg" alt="恭喜你安装完成！"></p>
+<pre><code>页面中两项请打钩。
 </code></pre>
-<hr>
-<p>Git常用命令：<br>
-<img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/4.jpg" alt="img"></p>
+<p>接着会打开一个Git Bash终端</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/4.jpg" alt="GitBash窗口"></p>
+<p>Git常用命令：</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/5.jpg" alt="一些常用命令"></p>
 <p><strong>获取到Git工具后，需要完成Git与Github的绑定</strong></p>
+<h4 id="获取ssh密钥"><a class="markdownIt-Anchor" href="#获取ssh密钥"></a> 获取ssh密钥</h4>
+<p>关于ssh的介绍可以参考：（<a href="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/%EF%BC%89">https://ivel-li.github.io/2024/11/25/ssh概述/）</a></p>
+<p>在windows中刚打开的Git Bash中（或者linux的终端中）：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br></pre></td></tr></table></figure>
+<p>如返回 “no such file or directory” 表明电脑没有ssh key，需要创建ssh key；</p>
+<p>在终端输入</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;在这里输入你的GitHub账户&quot;</span><br></pre></td></tr></table></figure>
+<p>连续三次回车（Enter）后，终端会显示：<a href="#refer-anchor-1"><sup>1</sup></a></p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/6.jpg" alt="你的ssh key保存位置"></p>
+<p>找到上述路径的文件夹，里面存有ssh的两个密钥，id_rsa为私钥，id_rsa.pub为公钥。</p>
+<p>用记事本打开id_rsa.pub文件，复制里面的全部内容。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/7.jpg" alt="你的ssh密钥"></p>
+<h4 id="与github仓库绑定"><a class="markdownIt-Anchor" href="#与github仓库绑定"></a> 与Github仓库绑定</h4>
+<p>找到你的个人账户的Settings，接着进入SSH and GPG keys项目。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/8.jpg" alt="你的ssh密钥"></p>
+<p>选择新建密钥。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/9.jpg" alt="新建ssh密钥"></p>
+<p>填写title并粘贴刚才复制的公钥，接着点击下方的Add SSH key，完成绑定。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/10.jpg" alt="输入密钥"></p>
+<p>在Git bash中输入</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p>接着输入yes，如果输出如下则表示绑定成功。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/11.jpg" alt="输入密钥"></p>
+<p>接下来是简单的配置环节：</p>
+<p>gitname最好与github账户名字相同，git邮箱有github账户的邮箱。</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name “gitname”</span><br><span class="line">git config --global user.email “git邮箱”</span><br></pre></td></tr></table></figure>
+<p><strong>至此，完成与Github仓库的绑定。</strong></p>
+<h3 id="github简单使用"><a class="markdownIt-Anchor" href="#github简单使用"></a> Github简单使用</h3>
+<ol>
+<li><strong>Git clone</strong>：将库克隆到本地，方便上传代码。</li>
+</ol>
+<p>进入自己刚才新建的库的我也，点击 &lt;&gt; Code，复制网址。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/12.jpg" alt="输入密钥"></p>
+<p>在本地选择的存储位置，右键选择Git Bash Here：</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/13.jpg" alt="本地目录下打开GitBash"></p>
+<p>输入：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone 刚才复制的网址</span><br></pre></td></tr></table></figure>
+<p>接着发现本地选择的目录下已经保存了我们的库。</p>
+<ol start="2">
+<li><strong>上传代码</strong>：</li>
+</ol>
+<p>我们尝试在本地新建一个For_test.txt文件，并上传到Github仓库，并为其添加备注</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/14.jpg" alt="输入密钥"></p>
+<p>可以观测到github上我们的文件已经上传成功：</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/15.jpg" alt="Github上传成功"></p>
+<p>Git push常用语法为：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push &lt;远程仓库名&gt; &lt;分支名&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>此处的远程仓库名是什么，分支是什么</strong></p>
+<p><em>分支一般为协同开发时不同开发者分别上传的内容，在初始化Git仓库时，Git默认已创建一个master（也叫main）的分支。</em></p>
+<p><em>远程仓库一般直接写为origin，直接代表本地文件夹相对应的远程仓库</em></p>
+<ol start="3">
+<li><strong>拉取文件</strong></li>
+</ol>
+<p>常用命令为</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull &lt;远程仓库名&gt; &lt;分支名&gt;</span><br></pre></td></tr></table></figure>
+<p>从远程仓库获取代码并合并本地版本。</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master:brantest</span><br></pre></td></tr></table></figure>
+<p>将远程仓库origin的master分支拉取过来，与本地的brandtest分支合并。</p>
 <h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考：</h2>
 <div id="refer-anchor-1"></div>
 - [1] https://blog.csdn.net/black_sneak/article/details/139600633
@@ -163,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3wx2blw0001cguuhlu8794r" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3x08wea0001xguu54h24yk3" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -209,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" data-id="cm3wx2bm30006cguubza6d6i4" data-title="ssh概述" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" data-id="cm3x08weh0006xguu7ujs7hl8" data-title="ssh概述" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -639,7 +699,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/" data-id="cm3wx2bm50008cguu7v288yk3" data-title="神经网络初始化问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/" data-id="cm3x08wer000gxguu66he1j7z" data-title="神经网络初始化问题" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -686,7 +746,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%A4%A7%E7%AC%A8%E7%8C%AA%E5%90%8D%E5%8D%95/" data-id="cm3wx2bmh000lcguu7eeu5rcd" data-title="大笨猪名单" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/%E5%A4%A7%E7%AC%A8%E7%8C%AA%E5%90%8D%E5%8D%95/" data-id="cm3x08wes000hxguu3hctbucu" data-title="大笨猪名单" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -742,7 +802,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/21/hello-world/" data-id="cm3wx2blz0003cguuhafq2450" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/21/hello-world/" data-id="cm3x08wed0003xguuhwpzczgs" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
