@@ -6,12 +6,12 @@
   
   <title>Github使用与背景知识（Git与建立自己的Github仓库） | Ivel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="Git是什么 Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。1 Git的特点：2   保存文件修改记录。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。   标记版本号，便于区分。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生">
+  <meta name="description" content="Git是什么Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。1 Git的特点：2  保存文件修改记录。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。  标记版本号，便于区分。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Github使用与背景知识（Git与建立自己的Github仓库）">
 <meta property="og:url" content="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/index.html">
 <meta property="og:site_name" content="Ivel">
-<meta property="og:description" content="Git是什么 Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。1 Git的特点：2   保存文件修改记录。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。   标记版本号，便于区分。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生">
+<meta property="og:description" content="Git是什么Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。1 Git的特点：2  保存文件修改记录。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。  标记版本号，便于区分。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/1.jpg">
 <meta property="og:image" content="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/2.jpg">
@@ -126,57 +126,43 @@
         <!-- 文章目录 -->
         
         <!-- Table of Contents -->
-        <h2 id="git是什么"><a class="markdownIt-Anchor" href="#git是什么"></a> Git是什么</h2>
-<p>Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。<a href="#refer-anchor-1"><sup>1</sup></a></p>
+        <h2 id="Git是什么"><a href="#Git是什么" class="headerlink" title="Git是什么"></a>Git是什么</h2><p>Git是一个开源的分布式版本控制系统，由Linus Torvalds为更好管理Linux内核开发而设计，让开发者与项目团队能更好地协同工作，在github上提供了一个Git代码的托管服务。<a href="#refer-anchor-1"><sup>1</sup></a></p>
 <p><strong>Git的特点：</strong><a href="#refer-anchor-2"><sup>2</sup></a></p>
 <ol>
-<li>
-<p><strong>保存文件修改记录</strong>。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。</p>
+<li><p><strong>保存文件修改记录</strong>。进行开发的时候，在本地可以保存我们代码，然后上传到服务器中。</p>
 </li>
-<li>
-<p><strong>标记版本号，便于区分</strong>。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号，用这个版本号来进行区分每一次的提交。这个版本号在git当中会使用一个hash值进行唯一区分；这个hash函数使用的是sha1（不仅git使用这个sha1生成hash值，一些著名的软件，如redis、lua等也是使用sha1产生hash值）。</p>
+<li><p><strong>标记版本号，便于区分</strong>。每次和服务器交互时都会提交一些修改的代码，git会为每一次提交生成版本号，用这个版本号来进行区分每一次的提交。这个版本号在git当中会使用一个hash值进行唯一区分；这个hash函数使用的是sha1（不仅git使用这个sha1生成hash值，一些著名的软件，如redis、lua等也是使用sha1产生hash值）。</p>
 </li>
-<li>
-<p><strong>提供历史版本记录</strong>。协同开发的时候，产生的每次提交都会在git上保存有历史版本信息，根据历史版本信息可以追溯到具体代码提交；以及当代码出现bug时可以根据历史版本锁定bug位置。<br>
-可还原到历史指定版本。当代码出现bug时，可以还原到历史指定的版本。</p>
+<li><p><strong>提供历史版本记录</strong>。协同开发的时候，产生的每次提交都会在git上保存有历史版本信息，根据历史版本信息可以追溯到具体代码提交；以及当代码出现bug时可以根据历史版本锁定bug位置。<br>可还原到历史指定版本。当代码出现bug时，可以还原到历史指定的版本。</p>
 </li>
-<li>
-<p><strong>对比版本差异</strong>。使用git diff工具进行比较文件差异</p>
+<li><p><strong>对比版本差异</strong>。使用git diff工具进行比较文件差异</p>
 </li>
 </ol>
-<h2 id="github是什么"><a class="markdownIt-Anchor" href="#github是什么"></a> Github是什么</h2>
-<p>Github是基于Git的在线托管平台，现在是微软旗下公司。Github为开发者们的Git仓库提供托管服务，同时提供社区功能，让用户们可关注其他用户、点赞项目（star）、下载克隆项目（clone）、对项目代码提出改进建议（fork）。</p>
-<h2 id="github使用"><a class="markdownIt-Anchor" href="#github使用"></a> Github使用</h2>
-<p>进入Github官网（<a target="_blank" rel="noopener" href="https://github.com">https://github.com</a>），选择Sign in(注册)，完成个人信息注册后登录。</p>
+<h2 id="Github是什么"><a href="#Github是什么" class="headerlink" title="Github是什么"></a>Github是什么</h2><p>Github是基于Git的在线托管平台，现在是微软旗下公司。Github为开发者们的Git仓库提供托管服务，同时提供社区功能，让用户们可关注其他用户、点赞项目（star）、下载克隆项目（clone）、对项目代码提出改进建议（fork）。</p>
+<h2 id="Github使用"><a href="#Github使用" class="headerlink" title="Github使用"></a>Github使用</h2><p>进入Github官网（<a target="_blank" rel="noopener" href="https://github.com），选择Sign">https://github.com），选择Sign</a> in(注册)，完成个人信息注册后登录。</p>
 <p>（tips: 1. Github与国内连接不稳定，有时需使用科学上网工具，2. 个人信息中username请谨慎填写&lt;可能会陪伴你很久……&gt;）</p>
-<h3 id="github仓库创建sup1sup"><a class="markdownIt-Anchor" href="#github仓库创建sup1sup"></a> Github仓库创建：<a href="#refer-anchor-1"><sup>1</sup></a></h3>
-<p>登录Github账户后，选择页面左上角菜单栏，然后选择 New （新建仓库）。</p>
+<h3 id="Github仓库创建：1"><a href="#Github仓库创建：1" class="headerlink" title="Github仓库创建：1"></a>Github仓库创建：<a href="#refer-anchor-1"><sup>1</sup></a></h3><p>登录Github账户后，选择页面左上角菜单栏，然后选择 New （新建仓库）。</p>
 <p>可参考：</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/1.jpg" alt="建立仓库"></p>
-<p>选择填写以下内容：<br>
-<img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/2.jpg" alt="建立仓库时的配置"></p>
+<p>选择填写以下内容：<br><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/2.jpg" alt="建立仓库时的配置"></p>
 <p>（tips：README文件一般用来让用户介绍该仓库的内容与使用方法）</p>
 <p>接着选择右下角Create repository（创建仓库）。</p>
-<h3 id="git与github绑定"><a class="markdownIt-Anchor" href="#git与github绑定"></a> Git与Github绑定</h3>
-<p>创建仓库后，需要自己本地的电脑克隆一个库，方便将代码同步到Github上的仓库，为此需要先安装git工具。</p>
+<h3 id="Git与Github绑定"><a href="#Git与Github绑定" class="headerlink" title="Git与Github绑定"></a>Git与Github绑定</h3><p>创建仓库后，需要自己本地的电脑克隆一个库，方便将代码同步到Github上的仓库，为此需要先安装git工具。</p>
 <p>在Linux上安装 git：</p>
 <p>如果在ubuntu或者Debian系统：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
 <p>如果在CentOS或者Fedora系统：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install git</span><br></pre></td></tr></table></figure>
 <p>在Windows上，则需要使用Git fow windows软件，来帮助用户使用命令行工具（Git Bash）来执行Windows应用于访问Winodows文件。此外，Git Bash还拥有着使用SSH进行远程操作的能力。</p>
-<p>在Git官网（<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a> ）<br>
-下载对应的Windows版本，依次点击下一步，最后弹出页面：</p>
+<p>在Git官网（<a target="_blank" rel="noopener" href="https://git-scm.com/downloads">https://git-scm.com/downloads</a> ）<br>下载对应的Windows版本，依次点击下一步，最后弹出页面：</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/3.jpg" alt="恭喜你安装完成！"></p>
 <pre><code>页面中两项请打钩。
-</code></pre>
-<p>接着会打开一个Git Bash终端</p>
+</code></pre><p>接着会打开一个Git Bash终端</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/4.jpg" alt="GitBash窗口"></p>
 <p>Git常用命令：</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/5.jpg" alt="一些常用命令"></p>
 <p><strong>获取到Git工具后，需要完成Git与Github的绑定</strong></p>
-<h4 id="获取ssh密钥"><a class="markdownIt-Anchor" href="#获取ssh密钥"></a> 获取ssh密钥</h4>
-<p>关于ssh的介绍可以参考：<a href="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0">https://ivel-li.github.io/2024/11/25/ssh概述</a></p>
+<h4 id="获取ssh密钥"><a href="#获取ssh密钥" class="headerlink" title="获取ssh密钥"></a>获取ssh密钥</h4><p>关于ssh的介绍可以参考：<a href="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0">https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0</a></p>
 <p>在windows中刚打开的Git Bash中（或者linux的终端中）：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.ssh</span><br></pre></td></tr></table></figure>
 <p>如返回 “no such file or directory” 表明电脑没有ssh key，需要创建ssh key；</p>
@@ -187,8 +173,7 @@
 <p>找到上述路径的文件夹，里面存有ssh的两个密钥，id_rsa为私钥，id_rsa.pub为公钥。</p>
 <p>用记事本打开id_rsa.pub文件，复制里面的全部内容。</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/7.jpg" alt="你的ssh密钥"></p>
-<h4 id="与github仓库绑定"><a class="markdownIt-Anchor" href="#与github仓库绑定"></a> 与Github仓库绑定</h4>
-<p>找到你的个人账户的Settings，接着进入SSH and GPG keys项目。</p>
+<h4 id="与Github仓库绑定"><a href="#与Github仓库绑定" class="headerlink" title="与Github仓库绑定"></a>与Github仓库绑定</h4><p>找到你的个人账户的Settings，接着进入SSH and GPG keys项目。</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/8.jpg" alt="你的ssh密钥"></p>
 <p>选择新建密钥。</p>
 <p><img src="https://ivel-Li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/9.jpg" alt="新建ssh密钥"></p>
@@ -202,8 +187,7 @@
 <p>gitname最好与github账户名字相同，git邮箱有github账户的邮箱。</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name “gitname”</span><br><span class="line">git config --global user.email “git邮箱”</span><br></pre></td></tr></table></figure>
 <p><strong>至此，完成与Github仓库的绑定。</strong></p>
-<h3 id="github简单使用"><a class="markdownIt-Anchor" href="#github简单使用"></a> Github简单使用</h3>
-<ol>
+<h3 id="Github简单使用"><a href="#Github简单使用" class="headerlink" title="Github简单使用"></a>Github简单使用</h3><ol>
 <li><strong>Git clone</strong>：将库克隆到本地，方便上传代码。</li>
 </ol>
 <p>进入自己刚才新建的库的我也，点击 &lt;&gt; Code，复制网址。</p>
@@ -213,7 +197,7 @@
 <p>输入：</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone 刚才复制的网址</span><br></pre></td></tr></table></figure>
 <p>接着发现本地选择的目录下已经保存了我们的库。</p>
-<ol start="2">
+<ol>
 <li><strong>上传代码</strong>：</li>
 </ol>
 <p>我们尝试在本地新建一个For_test.txt文件，并上传到Github仓库，并为其添加备注</p>
@@ -225,7 +209,7 @@
 <p><strong>此处的远程仓库名是什么，分支是什么</strong></p>
 <p><em>分支一般为协同开发时不同开发者分别上传的内容，在初始化Git仓库时，Git默认已创建一个master（也叫main）的分支。</em></p>
 <p><em>远程仓库一般直接写为origin，直接代表本地文件夹相对应的远程仓库</em></p>
-<ol start="3">
+<ol>
 <li><strong>拉取文件</strong></li>
 </ol>
 <p>常用命令为</p>
@@ -233,15 +217,19 @@
 <p>从远程仓库获取代码并合并本地版本。</p>
 <figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull origin master:brantest</span><br></pre></td></tr></table></figure>
 <p>将远程仓库origin的master分支拉取过来，与本地的brandtest分支合并。</p>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考：</h2>
-<div id="refer-anchor-1"></div>
-- [1] https://blog.csdn.net/black_sneak/article/details/139600633
-<div id="refer-anchor-2"></div>
-- [2] [https://blog.csdn.net/Long_xu/article/details/139724137]
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p><div id="refer-anchor-1"></div></p>
+<ul>
+<li>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/black_sneak/article/details/139600633">https://blog.csdn.net/black_sneak/article/details/139600633</a></li>
+</ul>
+<p><div id="refer-anchor-2"></div></p>
+<ul>
+<li>[2] [<a target="_blank" rel="noopener" href="https://blog.csdn.net/Long_xu/article/details/139724137">https://blog.csdn.net/Long_xu/article/details/139724137</a>]</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3x476bt000104uu9yfp7x8a" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" data-id="cm3x4d3iq0005g8uu0pt03o2f" data-title="Github使用与背景知识（Git与建立自己的Github仓库）" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
@@ -325,7 +313,7 @@
           </li>
         
           <li>
-            <a href="https://ivel-li.github.io/2024/11/21/%E5%88%9D%E5%A7%8B%E5%8C%96%E9%97%AE%E9%A2%98/">神经网络初始化问题</a>
+            <a href="https://ivel-li.github.io/2024/11/21/%E5%A4%A7%E7%AC%A8%E7%8C%AA%E5%90%8D%E5%8D%95/">大笨猪名单</a>
           </li>
         
       </ul>
