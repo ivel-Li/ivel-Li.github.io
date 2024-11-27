@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models | Ivel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="原文链接：https:&#x2F;&#x2F;www.robot-learning.uk&#x2F;dinobot  Abstract 我们提出了一种针对机器人操作问题的新型模仿学习框架DINOBot，其利用了使用DINO训练的Vision Transformers提取得到的图像与像素级别的特征。当与新目标交互时，DINOBot首先使用这些特征检索在人类演示过程中（训练过程中）最相似的目标，然后使用该对象将其末端执行器与新对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models">
+<meta property="og:url" content="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/index.html">
+<meta property="og:site_name" content="Ivel">
+<meta property="og:description" content="原文链接：https:&#x2F;&#x2F;www.robot-learning.uk&#x2F;dinobot  Abstract 我们提出了一种针对机器人操作问题的新型模仿学习框架DINOBot，其利用了使用DINO训练的Vision Transformers提取得到的图像与像素级别的特征。当与新目标交互时，DINOBot首先使用这些特征检索在人类演示过程中（训练过程中）最相似的目标，然后使用该对象将其末端执行器与新对象">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_d6485f65cb4f4053b6e88302bafc4d22~mv2.png/v1/fill/w_673,h_377,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dinobot_save_bottleneck.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_8d608625ac5f4b9fb11e9474cc48581b~mv2.gif">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_592ae6e2c4d04038928eb2b37c1c7993~mv2.png/v1/fill/w_1395,h_658,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/a2d711_592ae6e2c4d04038928eb2b37c1c7993~mv2.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_d185558aa65f4646878ebfd5b4463498~mv2.png/v1/fill/w_1461,h_606,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/a2d711_d185558aa65f4646878ebfd5b4463498~mv2.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_56b87778acc64e11938ab756aeb9ff38f000.jpg/v1/fill/w_447,h_251,al_c,q_80,usm_0.33_1.00_0.00,enc_avif,quality_auto/a2d711_56b87778acc64e11938ab756aeb9ff38f000.jpg">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_1edab314f0b1400c9d0048fffc292f04f000.jpg/v1/fill/w_447,h_251,al_c,q_80,usm_0.33_1.00_0.00,enc_avif,quality_auto/a2d711_1edab314f0b1400c9d0048fffc292f04f000.jpg">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_fe5ff4a289894674ac9e6581ef245f99~mv2.gif">
+<meta property="og:image" content="https://static.wixstatic.com/media/a2d711_9b4d138fdb0f4a2d828cbc8b3b9eedb5~mv2.gif">
+<meta property="article:published_time" content="2024-11-27T08:38:42.000Z">
+<meta property="article:modified_time" content="2024-11-27T14:06:17.527Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wixstatic.com/media/a2d711_d6485f65cb4f4053b6e88302bafc4d22~mv2.png/v1/fill/w_673,h_377,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dinobot_save_bottleneck.png">
+  
+    <link rel="alternate" href="https://ivel-li.github.io/atom.xml" title="Ivel" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="https://ivel-li.github.io/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="https://ivel-li.github.io/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://ivel-li.github.io/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" rel="stylesheet" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="https://ivel-li.github.io/" id="logo">Ivel</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="https://ivel-li.github.io/" id="subtitle">Greeting, welcome to my blog</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="https://ivel-li.github.io/">Home</a>
+        
+          <a class="main-nav-link" href="https://ivel-li.github.io/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="https://ivel-li.github.io/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ivel-Li.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/" class="article-date">
+  <time class="dt-published" datetime="2024-11-27T08:38:42.000Z" itemprop="datePublished">2024-11-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <p>原文链接：<a target="_blank" rel="noopener" href="https://www.robot-learning.uk/dinobot">https://www.robot-learning.uk/dinobot</a></p>
+<h2 id="abstract"><a class="markdownIt-Anchor" href="#abstract"></a> Abstract</h2>
+<p>我们提出了一种针对机器人操作问题的新型模仿学习框架DINOBot，其利用了使用DINO训练的Vision Transformers提取得到的图像与像素级别的特征。当与新目标交互时，DINOBot首先使用这些特征检索在人类演示过程中（训练过程中）最相似的目标，然后使用该对象将其末端执行器与新对象对齐（将夹持器置于对象的起始交互位置，例如置于其正上方（align：对齐）），以实现有效的交互。通过对日常任务的一系列现实世界实验，我们表明，利用视觉基础模型的图像级和像素级特性，可以实现前所未有的学习效率和泛化能力。</p>
+<h2 id="key-points"><a class="markdownIt-Anchor" href="#key-points"></a> key points:</h2>
+<ol>
+<li>one-shot能力：从单次演示中学习。</li>
+<li>generalising and robust：可以泛化到不同目标且对干扰与视觉变化具有鲁棒性。</li>
+</ol>
+<p><strong>基于视觉的模仿学习问题拆分：</strong></p>
+<ol>
+<li>图像检索：从演示数据集中进行图像级检索。</li>
+<li>像素对其：通过像素级对齐实时图像与目标图像。</li>
+</ol>
+<p>使用DINO（sota vision foundation models）进行图像处理。</p>
+<p><strong>DINOBot</strong>能够通过一个演示学习许多日常任务（one-shot），包括需要精确或灵巧的任务，对许多不同物体的泛化，以及对干扰和视觉变化的鲁棒性。</p>
+<h2 id="method"><a class="markdownIt-Anchor" href="#method"></a> Method</h2>
+<p><strong>通过检索、对齐和回放完成操作任务</strong></p>
+<p>Manipulation via Retrieval, Alignment and Replay</p>
+<p>previous work: (<a target="_blank" rel="noopener" href="https://www.robot-learning.uk/retrieval-alignment-replay">https://www.robot-learning.uk/retrieval-alignment-replay</a>)</p>
+<h3 id="1-演示记录demon-recording"><a class="markdownIt-Anchor" href="#1-演示记录demon-recording"></a> 1. 演示记录（Demon recording）</h3>
+<p><strong>训练：每个任务提供单次演示和目标标签。每个demo存储三个数据点：</strong></p>
+<ol>
+<li><strong>瓶颈观测（bottleneck observation）</strong>：demo开始时的姿态，机械臂相机捕捉到的图像。在记录演示轨迹前，机器人会从不同姿态观察，并收集结果和姿态数据集用于训练对齐策略，以便测试时末端执行器可以回到bottleneck pose。</li>
+</ol>
+<p><img src="https://static.wixstatic.com/media/a2d711_d6485f65cb4f4053b6e88302bafc4d22~mv2.png/v1/fill/w_673,h_377,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/dinobot_save_bottleneck.png" alt></p>
+<ol start="2">
+<li><strong>末端执行器轨迹（end-effector trajectory）</strong>：存储了夹持器（末端执行器）在演示中的轨迹和。</li>
+</ol>
+<p><img src="https://static.wixstatic.com/media/a2d711_8d608625ac5f4b9fb11e9474cc48581b~mv2.gif" alt></p>
+<ol start="3">
+<li><strong>任务名称（Task name）</strong>。注：demo标注包括object+task两部分。</li>
+</ol>
+<h3 id="2检索"><a class="markdownIt-Anchor" href="#2检索"></a> 2.检索</h3>
+<p>在部署时，使用DINO的图像特征理解能力，与演示记录的视觉特征进行比较，在找到最佳匹配后，执行对应轨迹</p>
+<p><img src="https://static.wixstatic.com/media/a2d711_592ae6e2c4d04038928eb2b37c1c7993~mv2.png/v1/fill/w_1395,h_658,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/a2d711_592ae6e2c4d04038928eb2b37c1c7993~mv2.png" alt></p>
+<h3 id="3对齐"><a class="markdownIt-Anchor" href="#3对齐"></a> 3.对齐</h3>
+<p>使用Best Buddies Nearest Neighbours matching算法，找到一组实时目标与demo中目标的特征最接近的descriptors，然后使用RGBD相机投影到3D。</p>
+<h3 id="4重放"><a class="markdownIt-Anchor" href="#4重放"></a> 4.重放</h3>
+<p>如若对齐是精确的，则可以使用简单的轨迹回放来完成操作。</p>
+<h2 id="experiment"><a class="markdownIt-Anchor" href="#experiment"></a> Experiment</h2>
+<center>
+在超过50个目标上执行了15个任务，DINOBot展现出了强大的执行效果与few-shot能力
+<p><img src="https://static.wixstatic.com/media/a2d711_d185558aa65f4646878ebfd5b4463498~mv2.png/v1/fill/w_1461,h_606,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/a2d711_d185558aa65f4646878ebfd5b4463498~mv2.png" alt="实验效果"></p>
+<p><img src="https://static.wixstatic.com/media/a2d711_56b87778acc64e11938ab756aeb9ff38f000.jpg/v1/fill/w_447,h_251,al_c,q_80,usm_0.33_1.00_0.00,enc_avif,quality_auto/a2d711_56b87778acc64e11938ab756aeb9ff38f000.jpg" alt="one-shot示意"></p>
+<p><img src="https://static.wixstatic.com/media/a2d711_1edab314f0b1400c9d0048fffc292f04f000.jpg/v1/fill/w_447,h_251,al_c,q_80,usm_0.33_1.00_0.00,enc_avif,quality_auto/a2d711_1edab314f0b1400c9d0048fffc292f04f000.jpg" alt="generalising示意"></p>
+<p>通过提取一组实时图像与demo图像的离散关键点进行对齐，具有一定鲁棒性</p>
+<p><img src="https://static.wixstatic.com/media/a2d711_fe5ff4a289894674ac9e6581ef245f99~mv2.gif" alt="演示"></p>
+<p><img src="https://static.wixstatic.com/media/a2d711_9b4d138fdb0f4a2d828cbc8b3b9eedb5~mv2.gif" alt="实时实验"></p>
+</center>
+<h2 id="limitations-and-prospect"><a class="markdownIt-Anchor" href="#limitations-and-prospect"></a> Limitations and prospect</h2>
+<ol>
+<li>
+<p>无法解决需要实时复杂反馈的任务，比如跟踪物体的边缘。</p>
+</li>
+<li>
+<p>可以引入第三人称摄像头，获取更多信息</p>
+</li>
+<li>
+<p>当前框架采用简单的重放轨迹的方式，拥有one-shot能力的同时失去采用few-shot的效果。</p>
+</li>
+<li>
+<p>泛化性：无法适应形状区别过大的物体。</p>
+</li>
+<li>
+<p>主要的操作原因：a. 目标图像检索出错 b. 错误的目标匹配 c. 相机的噪声深度估计（RGBD，depth估计错误，影响对齐） d. 无法交互（与demo中物体形状相差过大）</p>
+</li>
+</ol>
+<p>c的影响因素最大。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/" data-id="cm3zylus20000a8uu3f6shkfx" data-title="DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="https://ivel-li.github.io/2024/11/26/%E7%9B%B8%E5%90%8C%E6%96%87%E5%AD%97%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%88%E6%9C%AC/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">相同文字的三个版本</div>
+    </a>
+  
+</nav>
+
+  
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%BD%91%E7%BB%9C/">计算机科学网络</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%BD%91%E7%BB%9C/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/26/%E7%9B%B8%E5%90%8C%E6%96%87%E5%AD%97%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%88%E6%9C%AC/">相同文字的三个版本</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/26/%E5%BD%93%E8%87%AA%E7%94%B1%E7%9A%84%E9%B8%9F%E5%84%BF%E9%80%89%E6%8B%A9%E4%BA%86%E9%A9%BB%E8%B6%B3-%E3%80%8A%E8%B5%9B%E5%8D%9A%E6%9C%8B%E5%85%8B%C2%B7%E8%BE%B9%E7%BC%98%E8%A1%8C%E8%80%85%E3%80%8B/">当自由的鸟儿选择了驻足-《赛博朋克·边缘行者》</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/26/%E8%A1%97%E8%A7%92%E7%9A%84%E5%B0%8F%E5%89%A7%E9%99%A2/">街角的小剧院</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/26/%E5%88%9D%E6%81%8B/">初恋</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="https://ivel-li.github.io/" class="mobile-nav-link">Home</a>
+  
+    <a href="https://ivel-li.github.io/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="https://ivel-li.github.io/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="https://ivel-li.github.io/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="https://ivel-li.github.io/js/script.js"></script>
+
+
+
+
+
+  </div>
+<!-- hexo injector body_end start --><script data-pjax src="https://registry.npmmirror.com/oh-my-live2d/latest/files"></script><script>const oml2d = OML2D.loadOml2d({libraryUrls:{"complete":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/complete.js","cubism2":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/cubism2.js","cubism5":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/cubism5.js"},mobileDisplay:true,models:[{"path":"https://model.oml2d.com/koharu/model.json","mobilePosition":[0,0],"mobileScale":0.1,"mobileStageStyle":{"width":180,"height":166},"motionPreloadStrategy":"IDLE","position":[0,0],"scale":0.12,"stageStyle":{"width":250,"height":250}},{"path":"https://model.oml2d.com/HK416-2-destroy/model.json","scale":0.12,"position":[0,0],"stageStyle":{"width":250},"mobileScale":0.08,"mobilePosition":[0,0],"mobileStageStyle":{"width":180}},{"path":"https://model.oml2d.com/rem_2/model.json","scale":0.12,"position":[0,220],"mobileScale":0.08,"mobilePosition":[-5,5],"mobileStageStyle":{"width":180},"stageStyle":{"width":250}}],parentElement:document.body,primaryColor:"var(--btn-bg)",sayHello:false,tips:{style: {"width":230,"height":120,"left":"calc(50% - 20px)","top":"-100px"},mobileStyle: {"width":180,"height":80,"left":"calc(50% - 30px)","top":"-100px"},idleTips:{interval:15000,message:function(){
+  return axios.get('https://v1.hitokoto.cn?c=i')
+    .then(function (response) {
+      return response.data.hitokoto ;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
+}}});</script><!-- hexo injector body_end end --></body>
+</html>
