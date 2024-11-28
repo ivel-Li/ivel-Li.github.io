@@ -4,15 +4,27 @@
   <meta charset="utf-8">
   
   
-  <title>Category: 随笔 | Ivel</title>
+  <title>robot learning lab note | Ivel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Ivel">
-<meta property="og:url" content="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/index.html">
+  <meta name="description" content="Language Models as Zero-Shot Trajectory Generators使用prompt工程设计的LLM完成机械臂执行task的代码的实时生成。（https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2310.11604） Input: Main prompt and task instrution  Output: execution code  Keypoint Action">
+<meta property="og:type" content="article">
+<meta property="og:title" content="robot learning lab note">
+<meta property="og:url" content="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/index.html">
 <meta property="og:site_name" content="Ivel">
+<meta property="og:description" content="Language Models as Zero-Shot Trajectory Generators使用prompt工程设计的LLM完成机械臂执行task的代码的实时生成。（https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2310.11604） Input: Main prompt and task instrution  Output: execution code  Keypoint Action">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://static.wixstatic.com/media/a40efa_2fa8ef4839fe4cacb8a1e85655103a90~mv2.png/v1/fill/w_1301,h_661,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/pipeline.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png/v1/crop/x_0,y_3,w_1396,h_606/fill/w_892,h_374,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png">
+<meta property="og:image" content="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/1.png">
+<meta property="og:image" content="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/2.png">
+<meta property="og:image" content="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/3.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/b67b22_ce5612dfead94cccac8dada7c38a8f44~mv2.png/v1/fill/w_1531,h_525,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cr_fig1_no_tasks.png">
+<meta property="og:image" content="https://static.wixstatic.com/media/b67b22_695c5eb2c7624f47975c531c634f6c0f~mv2.png/v1/fill/w_719,h_622,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fusing2.png">
+<meta property="article:published_time" content="2024-11-28T06:48:37.000Z">
+<meta property="article:modified_time" content="2024-11-28T14:30:42.465Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://static.wixstatic.com/media/a40efa_2fa8ef4839fe4cacb8a1e85655103a90~mv2.png/v1/fill/w_1301,h_661,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/pipeline.png">
   
     <link rel="alternate" href="https://ivel-li.github.io/atom.xml" title="Ivel" type="application/atom+xml">
   
@@ -77,39 +89,83 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="https://ivel-li.github.io/archives/2024" class="archive-year">2024</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="https://ivel-li.github.io/2024/11/26/%E7%9B%B8%E5%90%8C%E6%96%87%E5%AD%97%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%88%E6%9C%AC/" class="archive-article-date">
-  <time class="dt-published" datetime="2024-11-26T07:06:10.000Z" itemprop="datePublished">Nov 26</time>
+        <section id="main"><article id="post-robot-learning-lab-note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/" class="article-date">
+  <time class="dt-published" datetime="2024-11-28T06:48:37.000Z" itemprop="datePublished">2024-11-28</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="https://ivel-li.github.io/2024/11/26/%E7%9B%B8%E5%90%8C%E6%96%87%E5%AD%97%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%88%E6%9C%AC/">相同文字的三个版本</a>
+    <h1 class="p-name article-title" itemprop="headline name">
+      robot learning lab note
     </h1>
   
 
-    </header>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <h3 id="Language-Models-as-Zero-Shot-Trajectory-Generators"><a href="#Language-Models-as-Zero-Shot-Trajectory-Generators" class="headerlink" title="Language Models as Zero-Shot Trajectory Generators"></a>Language Models as Zero-Shot Trajectory Generators</h3><p>使用prompt工程设计的LLM完成机械臂执行task的代码的实时生成。（<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2310.11604）">https://arxiv.org/pdf/2310.11604）</a></p>
+<p>Input: Main prompt and task instrution </p>
+<p>Output: execution code</p>
+<p><img src="https://static.wixstatic.com/media/a40efa_2fa8ef4839fe4cacb8a1e85655103a90~mv2.png/v1/fill/w_1301,h_661,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/pipeline.png" alt></p>
+<h3 id="Keypoint-Action-Tokens-Enable-In-Context-Imitation-Learning-in-Robotics"><a href="#Keypoint-Action-Tokens-Enable-In-Context-Imitation-Learning-in-Robotics" class="headerlink" title="Keypoint Action Tokens Enable In-Context Imitation Learning in Robotics"></a>Keypoint Action Tokens Enable In-Context Imitation Learning in Robotics</h3><p>创建了KAT（keypoint Action Tokens）框架来将视觉信息转为text输入LLM完成sequence to sequence 的模仿学习任务。（<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2403.19578）">https://arxiv.org/pdf/2403.19578）</a></p>
+<p>训练：输入目标关键点坐标和机械臂控制序列*n组，加入prompt中。</p>
+<p>测试：输入目标关键点坐标，集成训练时的机械臂控制序列进行机械臂action推理。</p>
+<p><img src="https://static.wixstatic.com/media/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png/v1/crop/x_0,y_3,w_1396,h_606/fill/w_892,h_374,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png" alt></p>
+<h3 id="Adapting-Skills-to-Novel-Grasps-A-Self-Supervised-Approach"><a href="#Adapting-Skills-to-Novel-Grasps-A-Self-Supervised-Approach" class="headerlink" title="Adapting Skills to Novel Grasps: A Self-Supervised Approach"></a>Adapting Skills to Novel Grasps: A Self-Supervised Approach</h3><p>(<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2408.00178">https://arxiv.org/pdf/2408.00178</a>)</p>
+<p>从单一抓取姿势到新的抓取姿势的关于抓取物品的操作轨迹的自适应推广。</p>
+<pre><code>（此处的抓取姿势强调的是末端执行器抓取着物品完成任务时的不同姿势，比如抓取着榔头敲钉子）
+</code></pre><p>本文提出了一种只需要一段自监督数据，便能直接完成轨迹自适应推广的方法，期间一个外部相机对末端执行器与被抓取物品的移动轨迹进行观察。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/1.png" alt="大致流程"></p>
+<p>符号：${W}$世界帧，${E}$末端执行器帧，${O}$被抓取对象的帧。</p>
+<p>定义了纠正转换$^{c}T_{EE’}$，在部署时改变末端执行器轨迹，使物品遵循与demo中相同轨迹</p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/2.png" alt="符号"></p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/3.png" alt="图像作为输入，预测$^{N}T_{EE&#39;}^{-1}$"></p>
+<p><strong>自监督数据收集</strong>：首先抓取着物品的末端执行器移动到参考位置$^{R}T_{WE}$，参考位置可以是任意的，仅要求其对相机清晰可见，从$^{R}T_{WE}$开始，采样并将机器人移动到相对于参考位置的随机姿态$^{N}T_{EE’}$；在每个末端执行器姿态$^{R}T_{WE}$ $^{N}T_{EE’}$，记录图像与逆变换$^{N}T^{-1}_{EE’}$。</p>
+<p>（所以实际上它完成了一个从图像对变换矩阵的回归预测任务，因为采集的时候数据可以自动记录，所以才称为逆变换。）</p>
+<h3 id="MILES-Making-Imitation-Learning-Easy-with-Self-Supervision"><a href="#MILES-Making-Imitation-Learning-Easy-with-Self-Supervision" class="headerlink" title="MILES: Making Imitation Learning Easy with Self-Supervision"></a>MILES: Making Imitation Learning Easy with Self-Supervision</h3><p>(<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2410.19693">https://arxiv.org/pdf/2410.19693</a>)</p>
+<p><img src="https://static.wixstatic.com/media/b67b22_ce5612dfead94cccac8dada7c38a8f44~mv2.png/v1/fill/w_1531,h_525,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cr_fig1_no_tasks.png" alt="方式对比"></p>
+<p>进行一次demo演示，接着记录轨迹的一些waypoint，通过在不同waypoint旁边随机采样起始点，再完成回到waypoint的任务，完成自监督数据采集与训练。</p>
+<p><img src="https://static.wixstatic.com/media/b67b22_695c5eb2c7624f47975c531c634f6c0f~mv2.png/v1/fill/w_719,h_622,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fusing2.png" alt="增强轨迹"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/" data-id="cm41excyc000068uuhfyf9lym" data-title="robot learning lab note" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</div>
+    </a>
+  
+</nav>
+
+  
+  
 </article>
-  
-  
-    </div></section>
-  
 
 
 </section>

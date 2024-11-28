@@ -79,6 +79,75 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-robot-learning-lab-note" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/" class="article-date">
+  <time class="dt-published" datetime="2024-11-28T06:48:37.000Z" itemprop="datePublished">2024-11-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/">robot learning lab note</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <h3 id="Language-Models-as-Zero-Shot-Trajectory-Generators"><a href="#Language-Models-as-Zero-Shot-Trajectory-Generators" class="headerlink" title="Language Models as Zero-Shot Trajectory Generators"></a>Language Models as Zero-Shot Trajectory Generators</h3><p>使用prompt工程设计的LLM完成机械臂执行task的代码的实时生成。（<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2310.11604）">https://arxiv.org/pdf/2310.11604）</a></p>
+<p>Input: Main prompt and task instrution </p>
+<p>Output: execution code</p>
+<p><img src="https://static.wixstatic.com/media/a40efa_2fa8ef4839fe4cacb8a1e85655103a90~mv2.png/v1/fill/w_1301,h_661,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/pipeline.png" alt></p>
+<h3 id="Keypoint-Action-Tokens-Enable-In-Context-Imitation-Learning-in-Robotics"><a href="#Keypoint-Action-Tokens-Enable-In-Context-Imitation-Learning-in-Robotics" class="headerlink" title="Keypoint Action Tokens Enable In-Context Imitation Learning in Robotics"></a>Keypoint Action Tokens Enable In-Context Imitation Learning in Robotics</h3><p>创建了KAT（keypoint Action Tokens）框架来将视觉信息转为text输入LLM完成sequence to sequence 的模仿学习任务。（<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2403.19578）">https://arxiv.org/pdf/2403.19578）</a></p>
+<p>训练：输入目标关键点坐标和机械臂控制序列*n组，加入prompt中。</p>
+<p>测试：输入目标关键点坐标，集成训练时的机械臂控制序列进行机械臂action推理。</p>
+<p><img src="https://static.wixstatic.com/media/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png/v1/crop/x_0,y_3,w_1396,h_606/fill/w_892,h_374,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/20f657_93f6f2263629416fad4d2c4efd8a7eb0~mv2.png" alt></p>
+<h3 id="Adapting-Skills-to-Novel-Grasps-A-Self-Supervised-Approach"><a href="#Adapting-Skills-to-Novel-Grasps-A-Self-Supervised-Approach" class="headerlink" title="Adapting Skills to Novel Grasps: A Self-Supervised Approach"></a>Adapting Skills to Novel Grasps: A Self-Supervised Approach</h3><p>(<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2408.00178">https://arxiv.org/pdf/2408.00178</a>)</p>
+<p>从单一抓取姿势到新的抓取姿势的关于抓取物品的操作轨迹的自适应推广。</p>
+<pre><code>（此处的抓取姿势强调的是末端执行器抓取着物品完成任务时的不同姿势，比如抓取着榔头敲钉子）
+</code></pre><p>本文提出了一种只需要一段自监督数据，便能直接完成轨迹自适应推广的方法，期间一个外部相机对末端执行器与被抓取物品的移动轨迹进行观察。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/1.png" alt="大致流程"></p>
+<p>符号：${W}$世界帧，${E}$末端执行器帧，${O}$被抓取对象的帧。</p>
+<p>定义了纠正转换$^{c}T_{EE’}$，在部署时改变末端执行器轨迹，使物品遵循与demo中相同轨迹</p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/2.png" alt="符号"></p>
+<p><img src="https://ivel-Li.github.io/2024/11/28/robot-learning-lab-note/3.png" alt="图像作为输入，预测$^{N}T_{EE&#39;}^{-1}$"></p>
+<p><strong>自监督数据收集</strong>：首先抓取着物品的末端执行器移动到参考位置$^{R}T_{WE}$，参考位置可以是任意的，仅要求其对相机清晰可见，从$^{R}T_{WE}$开始，采样并将机器人移动到相对于参考位置的随机姿态$^{N}T_{EE’}$；在每个末端执行器姿态$^{R}T_{WE}$ $^{N}T_{EE’}$，记录图像与逆变换$^{N}T^{-1}_{EE’}$。</p>
+<p>（所以实际上它完成了一个从图像对变换矩阵的回归预测任务，因为采集的时候数据可以自动记录，所以才称为逆变换。）</p>
+<h3 id="MILES-Making-Imitation-Learning-Easy-with-Self-Supervision"><a href="#MILES-Making-Imitation-Learning-Easy-with-Self-Supervision" class="headerlink" title="MILES: Making Imitation Learning Easy with Self-Supervision"></a>MILES: Making Imitation Learning Easy with Self-Supervision</h3><p>(<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2410.19693">https://arxiv.org/pdf/2410.19693</a>)</p>
+<p><img src="https://static.wixstatic.com/media/b67b22_ce5612dfead94cccac8dada7c38a8f44~mv2.png/v1/fill/w_1531,h_525,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/cr_fig1_no_tasks.png" alt="方式对比"></p>
+<p>进行一次demo演示，接着记录轨迹的一些waypoint，通过在不同waypoint旁边随机采样起始点，再完成回到waypoint的任务，完成自监督数据采集与训练。</p>
+<p><img src="https://static.wixstatic.com/media/b67b22_695c5eb2c7624f47975c531c634f6c0f~mv2.png/v1/fill/w_719,h_622,al_c,q_90,usm_0.66_1.00_0.01,enc_avif,quality_auto/fusing2.png" alt="增强轨迹"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/" data-id="cm41excyc000068uuhfyf9lym" data-title="robot learning lab note" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+  
+</article>
+
+
+
+  
     <article id="post-DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/" class="article-date">
@@ -520,13 +589,13 @@
         
         <!-- Table of Contents -->
         <p>我决意要写一篇小说。</p>
-<h2 id="幕一"><a class="markdownIt-Anchor" href="#幕一"></a> 幕一</h2>
-<p>冒出这个想法是在暑假结束前的第十天，其实在此之前，假期伊始，我曾规划好整个暑假的时间，去完成一部对我来说称得上“宏大”的中篇小说，奈何勉强拼凑出数万字的情节，才发现全篇都是别人的影子，所谓辛苦创作到头来不过是拾人牙慧。唏嘘之余，我并未放弃创作的想法，暑假行将结束的日子，跨过群山所见的海、夜奔的少年少女一并涌入我的梦境，我决意要写一篇小说，而且想好了标题——《直到最后，我们也没有去看那片海》，小说结尾处，主角将亲口道出这句话。</p>
+<h2 id="幕一"><a href="#幕一" class="headerlink" title="幕一"></a>幕一</h2><p>冒出这个想法是在暑假结束前的第十天，其实在此之前，假期伊始，我曾规划好整个暑假的时间，去完成一部对我来说称得上“宏大”的中篇小说，奈何勉强拼凑出数万字的情节，才发现全篇都是别人的影子，所谓辛苦创作到头来不过是拾人牙慧。唏嘘之余，我并未放弃创作的想法，暑假行将结束的日子，跨过群山所见的海、夜奔的少年少女一并涌入我的梦境，我决意要写一篇小说，而且想好了标题——《直到最后，我们也没有去看那片海》，小说结尾处，主角将亲口道出这句话。</p>
 <p>下笔之前，构建出一个完整的大纲、理清故事脉络是不可或缺的步骤。所以我联系了旧时好友，希望和他能先商量着捣鼓出框架，接下来的日子慢慢填补小说内容。</p>
 <p>见面寒暄过后，我道明了来意，解释了目前的想法：“简而言之，就是在青春终末，少年少女相约去看海，却因为各种原因未能如愿的故事。”</p>
 <p>“你想写便写罢，毕竟我也说过，你写不下去的话，我会帮你完成一部分的。”</p>
 <p>“多谢。”</p>
 <p>接着我们讨论创作的细节，讨论完角色的大体设定和故事脉络，他开始完善大纲内容，而我提笔，开始描绘起方才在眼前浮现的情景。</p>
+<p><table><tr><td bgcolor="Beige"></td></tr></table></p>
 <pre><code>舷窗外飘起小雨，远处推着小车的保洁工身影逐渐模糊，直到融化成背景里的群青色斑点。机翼缓慢加速穿过雨幕，涡轮引擎呼啸悲鸣，要将他推离这片陌生的土地。
 
 或许是为了弥补彼时的遗憾，高考结束后A选择了这座临海城市，在这里度过短暂的大学时光。不只是太多琐事消耗掉他满腔的热情，或是自己选择了沉沦，溺死在一无所成的日子；隔着流逝的雨幕，他看着形形色色的人影走过，无数憧憬泛着光越飘越远，而那个看海的愿望，早不知飘向了何方。
@@ -540,15 +609,13 @@
 秃顶男人轻哼一声，把嘴里烧一半的华子直接掐灭到酒杯里，答道：“没呢，当时我在山里迷了路，遇上个好心人帮忙送了我回去。”
 
 “直到最后，我们还是没能去看那片海。”
-</code></pre>
-<h2 id="幕二"><a class="markdownIt-Anchor" href="#幕二"></a> 幕二</h2>
-<p>“所以这个秃顶的是B？”</p>
+</code></pre><p>&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
+<h2 id="幕二"><a href="#幕二" class="headerlink" title="幕二"></a>幕二</h2><p>“所以这个秃顶的是B？”</p>
 <p>“嗯呢。”</p>
 <p>“嗯——这是结尾部分A的自述？感觉最后的转折也太生硬了吧，数年后的部分给人一种很赶的感觉，最后一句话就像是作者写不下去了硬生生凑出来点题的。”</p>
 <p>“好像……确实是这样。”</p>
 <p>“你来看看我写的大纲。”友人招呼着我凑近笔记本屏幕。</p>
-<p>大纲开头处写着类似卷首语的东西：<br>
-与其说想去看海，不如说是主人公们对于将要破笼而出，脱离一直束缚自己的小环境的迷茫。与其说梦想是什么，他们更想知道试着去做什么异想天开的事情——真正的幻想实现到底是什么样的。</p>
+<p>大纲开头处写着类似卷首语的东西：<br>    与其说想去看海，不如说是主人公们对于将要破笼而出，脱离一直束缚自己的小环境的迷茫。与其说梦想是什么，他们更想知道试着去做什么异想天开的事情——真正的幻想实现到底是什么样的。</p>
 <p>“你写的什么寄吧。”</p>
 <p>“凑合着看吧。”</p>
 <p>这段文字过后是人物设定以及剧情大纲。最初的讨论中，我们敲定了A、B、C三位主要人物的形象和关系，友人在方才填充了具体内容。</p>
@@ -561,8 +628,7 @@ B（男）：成绩比较差。纯纯富哥，奈何家教严格，总有一些�
 C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱恋，平时在大家面前不爱说话，但是却愿意同A与B多聊上几句，甚至会特意打招呼。在看海的事情上，与其说是想去看海，其实只是不想被A、B丢下，至少能跟其中一个人呆在一块就好。
 
 父亲是货车司机，母亲则在乡下种地或者找零活，跟A一样都是长期在学校吃饭的类型，平时自己住在姑妈家里面。）
-</code></pre>
-<p>“富哥成绩较好，A成绩较差会更好一些。”</p>
+</code></pre><p>“富哥成绩较好，A成绩较差会更好一些。”</p>
 <p>“富哥骄奢淫逸成绩垫底才对吧。”</p>
 <p>“但是家境好的成绩好才更合理一些吧。”</p>
 <p>“……行吧。”</p>
@@ -581,7 +647,7 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 
 “停停停，你刚才说啥。”
 
-“ 我说，要不要去看海。”
+“ 我说，要不要去看海。”
 
 “海？”
 
@@ -600,14 +666,12 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 “我家里管得严，但空一天还是能圆过去的。”他又补充了一句。
 
 “好的，快上课了，这事过几天再说吧。”
-</code></pre>
-<p>在我尝试完成意义不明的开头期间，友人整理了剧情大纲的部分。按照最初的想法，应该分为“打算去看海-&gt;计划坐班车，结果受到阻碍-&gt;解决交通工具的问题，出发去看海-&gt;没能看到海”这四个部分，友人完善了每部分的大致内容，准确来说，是将我们讨论的内容付诸笔墨。</p>
+</code></pre><p>在我尝试完成意义不明的开头期间，友人整理了剧情大纲的部分。按照最初的想法，应该分为“打算去看海-&gt;计划坐班车，结果受到阻碍-&gt;解决交通工具的问题，出发去看海-&gt;没能看到海”这四个部分，友人完善了每部分的大致内容，准确来说，是将我们讨论的内容付诸笔墨。</p>
 <p>“我觉得交通工具可以写成A通过撒谎等方式从叔叔或者舅舅家套来了一辆宝马摩托车。不过说是宝马，其实是他叔叔从网上买了个车标然后贴上去的。”</p>
 <p>“所以为什么是宝马？”</p>
 <p>“不知道……随便想的。”</p>
 <p>之后，我们……嗯，抱歉，由于这篇文章本质上是回忆往事，而我现在急着跑去下云顶之弈，因此减弱了几分回忆的能力。稍等……哦，我想起来了，在那个漫长的夏日午后余下的时光里，我下了两把云顶之弈。</p>
-<h2 id="幕三"><a class="markdownIt-Anchor" href="#幕三"></a> 幕三</h2>
-<pre><code>最后他们准备好了一切，可惜一切并不顺利，首先是打工消磨了时间，其次是司机并不熟悉路线，所以在很多陌生的小乡村里面乱逛，在乡间小路里面穿行。经过几天，本地人恶意加价的油量，出租车上度过的廉价夜晚，让其中一个少年在突出重围的征程中选择了逃避，趁车辆维修，泡在了网吧里面，嘴里说着“打最后一把云顶之奕，我马上就铂金段位，打完就精力饱满地去看海。”
+<h2 id="幕三"><a href="#幕三" class="headerlink" title="幕三"></a>幕三</h2><pre><code>最后他们准备好了一切，可惜一切并不顺利，首先是打工消磨了时间，其次是司机并不熟悉路线，所以在很多陌生的小乡村里面乱逛，在乡间小路里面穿行。经过几天，本地人恶意加价的油量，出租车上度过的廉价夜晚，让其中一个少年在突出重围的征程中选择了逃避，趁车辆维修，泡在了网吧里面，嘴里说着“打最后一把云顶之奕，我马上就铂金段位，打完就精力饱满地去看海。”
 
 结果另一个少年，在朋友圈发布高中最后的暑假看了海，而网瘾少年连泡两夜网吧后，顺利地抵达钻石段位。当少年从网吧取下耳机，感叹高中无憾时，这时才发现自己被父母围住，突然才发现自己好像还没去看海。
 
@@ -622,8 +686,7 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 “可惜了......”
 
 “直到最后，我们也没有去看那片海。”
-</code></pre>
-<p>“我要把你下云顶写进小说里。”</p>
+</code></pre><p>“我要把你下云顶写进小说里。”</p>
 <p>没错，此时这篇小说已经完全变成了两人共同创作的产物，一个人写根本没有写作的动力，毕竟赚不了钱。</p>
 <p>“哎呀，磨刀不误砍柴工嘛。我本来灵感枯竭，这多下几把云顶这不就文思泉涌了。”</p>
 <p>“那让我看看你写了啥。”</p>
@@ -667,21 +730,18 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 “你怎么这么不谦虚。”
 
 “……我去放碗。”
-</code></pre>
-<p>“什么照镜子环节。”</p>
+</code></pre><p>“什么照镜子环节。”</p>
 <p>“确实有从生活实际改编的部分，嗯不过我感觉还是不太到位，好像不够压抑吧。”</p>
 <p>“那么，你现在打算怎么办。”友人往后一仰，像海星一般瘫坐到床上：“啊——一点都不想动了。”</p>
 <p>“别啊，你这样我都开始想打云顶之弈了。”</p>
 <p>……</p>
-<h2 id="幕四"><a class="markdownIt-Anchor" href="#幕四"></a> 幕四</h2>
-<p>故事发展最终敲定为：邻近故事结局，由于某些突发情况（与之前折千纸鹤的原因相呼应），C不得不提前回家，但B坚持想去看海，于是三人间出现分歧，A踌躇片刻后决定先送C回家，三人分道扬镳。</p>
-<pre><code>她偎依在我身后，臂弯环绕在胸前。我能感受到她手臂的温度，和耳边若隐若现的呼吸声。拂面冷风带走夏夜的燥热，路灯的影子延伸到道路尽头。 那个瞬间，我感觉自己就是世界的皇帝，架起车辇纵横捭阖，身后是千军万马和挚爱的女人；我挥起长剑，要踏平世界的角落。群山在我脚下臣服，夜幕燃成银河，照亮征伐的道路。我听见她说，想要就一直、一直这样下去，直到世界尽头。
+<h2 id="幕四"><a href="#幕四" class="headerlink" title="幕四"></a>幕四</h2><p>故事发展最终敲定为：邻近故事结局，由于某些突发情况（与之前折千纸鹤的原因相呼应），C不得不提前回家，但B坚持想去看海，于是三人间出现分歧，A踌躇片刻后决定先送C回家，三人分道扬镳。</p>
+<pre><code>她偎依在我身后，臂弯环绕在胸前。我能感受到她手臂的温度，和耳边若隐若现的呼吸声。拂面冷风带走夏夜的燥热，路灯的影子延伸到道路尽头。 那个瞬间，我感觉自己就是世界的皇帝，架起车辇纵横捭阖，身后是千军万马和挚爱的女人；我挥起长剑，要踏平世界的角落。群山在我脚下臣服，夜幕燃成银河，照亮征伐的道路。我听见她说，想要就一直、一直这样下去，直到世界尽头。
 
 但我没有千军万马，也没有挥斥宇内的宝剑，一切少年的臆想都如同叔叔为附庸风雅而贴上的宝马车标，在不经意间被风吹剥落，暴露出原本的穷酸模样。在离家大概5公里处，我的车辇终是油尽灯枯，再也点不上火；我和C推着摩托车不知走了多久，一路上相对无言。在途径学校门口处，我向她挥手告别，我们不再顺路，要回到不同的地方。她迟疑了一会，把手上的红绳解下，系在我的手腕上；她向我告别，消失在小巷的阴影里。
 
 多年后我曾质问自己，到底有没有喜欢过那个爱在窗边默默折千纸鹤的女孩，奈何过往的记忆早已支离破碎，再难拼凑出事件的原貌，我找不到问题的答案。但我可以肯定的是，至少在那个叛逃的夜晚，我只想牵起那女孩的手，和她一起逃离，直到世界和时间尽头。
-</code></pre>
-<p>“那么，其他部分呢？”</p>
+</code></pre><p>“那么，其他部分呢？”</p>
 <p>“其他部分？”</p>
 <p>“比如A是怎么骗到叔叔的摩托车的，以及C接到的电话里到底说了什么，还有……哎呀就中间发生的所有情节你压根就没写嘛。”</p>
 <p>“我不知道。”</p>
@@ -691,7 +751,9 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 <p>“……”</p>
 <p>“直到最后，我们也没有去看那片海”</p>
 <p align="right" color="grey">By ivel, nas</p>
+
 <p align="right">2023/4/28</p>
+
 
       
     </div>
@@ -990,64 +1052,6 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 
 
   
-    <article id="post-ssh概述" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" class="article-date">
-  <time class="dt-published" datetime="2024-11-25T08:23:33.000Z" itemprop="datePublished">2024-11-25</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%BD%91%E7%BB%9C/">计算机科学网络</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E7%BD%91%E7%BB%9C/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/">ssh概述</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <!-- 文章目录 -->
-        
-        <!-- Table of Contents -->
-        <h2 id="ssh-简述"><a class="markdownIt-Anchor" href="#ssh-简述"></a> SSH 简述</h2>
-<p>SSH是一种网络协议，用于计算机间的加密登录。在1995年，芬兰学者Tatu Ylonen设计了SSH协议，加密登录信息；该协议终结了互联网间明文通信，被截获后内容暴露无遗的现象，迅速在全球推广，成为Linux系统的标准配置。</p>
-<p>ssh原理如下：<a href="#refer-anchor-1"><sup>1</sup></a></p>
-<p><img src="https://ivel-Li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/1.png" alt="ssh原理图"></p>
-<h2 id="ssh-常见用法"><a class="markdownIt-Anchor" href="#ssh-常见用法"></a> SSH 常见用法</h2>
-<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 22 user@host</span><br></pre></td></tr></table></figure>
-<p>-p 22：指定port（端口）为22。（一般默认端口为22）</p>
-<p>关于ip的介绍，可以参考</p>
-<p>user: 登录的用户名。</p>
-<p>host：登录的主机的ip。可参考 <a href="https://ivel-li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/">https://ivel-li.github.io/2024/11/25/IP是什么/</a></p>
-<h2 id="参考"><a class="markdownIt-Anchor" href="#参考"></a> 参考：</h2>
-<div id="refer-anchor-1"></div>
-- [1] https://blog.csdn.net/wang_qiu_hao/article/details/127902007
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/25/ssh%E6%A6%82%E8%BF%B0/" data-id="cm3y4k1v30008houu38s12ksz" data-title="ssh概述" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1091,6 +1095,10 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
       <ul>
         
           <li>
+            <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/">robot learning lab note</a>
+          </li>
+        
+          <li>
             <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</a>
           </li>
         
@@ -1104,10 +1112,6 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
         
           <li>
             <a href="https://ivel-li.github.io/2024/11/26/%E8%A1%97%E8%A7%92%E7%9A%84%E5%B0%8F%E5%89%A7%E9%99%A2/">街角的小剧院</a>
-          </li>
-        
-          <li>
-            <a href="https://ivel-li.github.io/2024/11/26/%E5%88%9D%E6%81%8B/">初恋</a>
           </li>
         
       </ul>
