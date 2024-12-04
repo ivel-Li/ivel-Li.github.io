@@ -967,8 +967,11 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
 <p><img src="https://ivel-Li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/1.png" alt="终端上输出的6个IP"></p>
 <p>第一行输出192.168.1.24为本机在局域网中（比如同一路由器下）的IPv4格式地址，用于局域网络内的通信，第二行为对应IPv6地址。</p>
 <p>第三行输出127.0.0.1为环回地址的IPv4格式，用于本机与本机通信（自己和自己通信），第四行为对应IPv6地址。</p>
-<p>第五行输出为本机在广域网下的IP，在较大范围内可以用这个ip进行远程通信，第二行为对应IPv6地址。ssh远程控制一般用这个。</p>
-<p>（tips: 广域网IP不等于互联网的IP，涉及到NAT转换的问题）</p>
+<p>（第五行输出为本机在广域网下的IP【不对，是虚拟网卡的ip】，在较大范围内可以用这个ip进行远程通信，第二行为对应IPv6地址。）</p>
+<p>公网ip用:</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ifconfig.me</span><br></pre></td></tr></table></figure>
+<p>ssh远程操作非同一局域网下的服务器用这个ip。</p>
+<p>（tips: 广域网IP不等于互联网的IP）</p>
 
       
     </div>
