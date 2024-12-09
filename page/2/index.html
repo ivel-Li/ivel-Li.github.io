@@ -79,6 +79,133 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-端口是什么" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/11/25/%E7%AB%AF%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time class="dt-published" datetime="2024-11-25T13:05:43.000Z" itemprop="datePublished">2024-11-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="https://ivel-li.github.io/2024/11/25/%E7%AB%AF%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/">端口是什么</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <h3 id="网络端口"><a class="markdownIt-Anchor" href="#网络端口"></a> 网络端口</h3>
+<p>端口标识一台计算机<strong>特定进程</strong>提供的服务，让IP相同的情况下（一台计算机）可以分辨不同进程。</p>
+<p>比如SSH的默认端口为22，jupyter notebook默认端口为8888。</p>
+<h3 id="注意事项"><a class="markdownIt-Anchor" href="#注意事项"></a> 注意事项</h3>
+<ol>
+<li><strong>同一台计算机上端口不应重复。</strong> 否则会发生端口号冲突</li>
+<li><strong>使用的端口号应大于1024。</strong> 0~1023端口为公认端口，明确绑定了特定的服务协议。</li>
+<li><strong>临时端口。</strong> 客户端端口号存在时间短暂，大多TCP/IP实现会临时分配1024~5000的端口号。</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/11/25/%E7%AB%AF%E5%8F%A3%E6%98%AF%E4%BB%80%E4%B9%88/" data-id="cm3y4k1vh0011houu0r971vyu" data-title="端口是什么" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+  
+</article>
+
+
+
+  
+    <article id="post-IP是什么" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/" class="article-date">
+  <time class="dt-published" datetime="2024-11-25T13:05:34.000Z" itemprop="datePublished">2024-11-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="https://ivel-li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/">IP是什么</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <h3 id="ip-简介"><a class="markdownIt-Anchor" href="#ip-简介"></a> IP 简介</h3>
+<p>IP（Internet Protocol Address）是互联网中用于标识和定位设备的唯一标识符，一般有IPv4和IPv6两个版本。</p>
+<h4 id="子网掩码"><a class="markdownIt-Anchor" href="#子网掩码"></a> 子网掩码</h4>
+<p>子网掩码用于划分IP主机部分与网络部分。网络部分标识了所属的网络，主机部分标识了具体主机。</p>
+<p>例如IPv4地址192.168.0.1和子网掩码255.255.255.0，逐位逻辑运算得到网络地址192.168.0.0（网络地址）和0.0.0.1（主机标识）。</p>
+<h4 id="网关"><a class="markdownIt-Anchor" href="#网关"></a> 网关</h4>
+<p>连接两个或多个不同网络设备或节点，实现网络间通信。</p>
+<p>网关可以是硬件设备（如路由器）或网络实现（如网络中某个服务器）。完成数据转发、NAT、DNS解析、协议转换等功能。</p>
+<p>tips：网关与默认网关不同，后者通常是本地网络中设置的主机，处理与其他网络数据包的转发与出站数据包目标地址，前者则用于任意设备连接不同网络。</p>
+<h4 id="mac地址"><a class="markdownIt-Anchor" href="#mac地址"></a> MAC地址</h4>
+<p>MAC地址是网卡制造商预先分配并烧录的全球唯一地址。仅在局域网内传播，不会在不同局域网间传播。</p>
+<h4 id="nat地址中转换技术"><a class="markdownIt-Anchor" href="#nat地址中转换技术"></a> NAT地址中转换技术</h4>
+<p>NAT将内部私有的网络地址（IP地址）转化合法的网络IP使用，即内部节点与外部网络通信时，在网关处将内部地址替换为共有地址，从而在外部网络中使用。</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/2.png" alt="图示"></p>
+<h3 id="同一台机器なのに何故6个ipが有るの"><a class="markdownIt-Anchor" href="#同一台机器なのに何故6个ipが有るの"></a> 同一台机器なのに，何故6个IPが有るの？</h3>
+<p>在终端中输入：</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig | grep inet</span><br></pre></td></tr></table></figure>
+<p>终端将得到如下输出：</p>
+<p><img src="https://ivel-Li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/1.png" alt="终端上输出的6个IP"></p>
+<p>第一行输出192.168.1.24为本机在局域网中（比如同一路由器下）的IPv4格式地址，用于局域网络内的通信，第二行为对应IPv6地址。</p>
+<p>第三行输出127.0.0.1为环回地址的IPv4格式，用于本机与本机通信（自己和自己通信），第四行为对应IPv6地址。</p>
+<p>（第五行输出为本机在广域网下的IP【不对，是虚拟网卡的ip】，在较大范围内可以用这个ip进行远程通信，第二行为对应IPv6地址。）</p>
+<p>公网ip用:</p>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl ifconfig.me</span><br></pre></td></tr></table></figure>
+<p>ssh远程操作非同一局域网下的服务器用这个ip。</p>
+<p>（tips: 广域网IP不等于互联网的IP）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/11/25/IP%E6%98%AF%E4%BB%80%E4%B9%88/" data-id="cm3y4k1uy0003houu9ag94nxo" data-title="IP是什么" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+  
+</article>
+
+
+
+  
     <article id="post-Github使用与背景知识（Git与建立自己的Github仓库）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="https://ivel-li.github.io/2024/11/25/Github%E4%BD%BF%E7%94%A8%E4%B8%8E%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86%EF%BC%88Git%E4%B8%8E%E5%BB%BA%E7%AB%8B%E8%87%AA%E5%B7%B1%E7%9A%84Github%E4%BB%93%E5%BA%93%EF%BC%89/" class="article-date">
@@ -857,7 +984,7 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/11/">November 2024</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/11/">November 2024</a></li></ul>
     </div>
   </div>
 
@@ -870,6 +997,14 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
       <ul>
         
           <li>
+            <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（不同局域网下）</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（相同局域网下）</a>
+          </li>
+        
+          <li>
             <a href="https://ivel-li.github.io/2024/11/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/">计算机网络结构</a>
           </li>
         
@@ -879,14 +1014,6 @@ M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">�
         
           <li>
             <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</a>
-          </li>
-        
-          <li>
-            <a href="https://ivel-li.github.io/2024/11/26/%E7%9B%B8%E5%90%8C%E6%96%87%E5%AD%97%E7%9A%84%E4%B8%89%E4%B8%AA%E7%89%88%E6%9C%AC/">相同文字的三个版本</a>
-          </li>
-        
-          <li>
-            <a href="https://ivel-li.github.io/2024/11/26/%E5%BD%93%E8%87%AA%E7%94%B1%E7%9A%84%E9%B8%9F%E5%84%BF%E9%80%89%E6%8B%A9%E4%BA%86%E9%A9%BB%E8%B6%B3-%E3%80%8A%E8%B5%9B%E5%8D%9A%E6%9C%8B%E5%85%8B%C2%B7%E8%BE%B9%E7%BC%98%E8%A1%8C%E8%80%85%E3%80%8B/">当自由的鸟儿选择了驻足-《赛博朋克·边缘行者》</a>
           </li>
         
       </ul>
