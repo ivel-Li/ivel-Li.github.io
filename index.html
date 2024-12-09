@@ -104,7 +104,44 @@
         <!-- 文章目录 -->
         
         <!-- Table of Contents -->
-        
+        <p>前文中介绍了怎么使用socket在相同局域网下通信，接下来介绍在不同局域网下如何通信。</p>
+<p>这个问题的源头在于IP，在路由器下的主机并没有实际的公网IP，而是一般由数据传输到有公网IP的路由器，再由路由器根据内网IP与主机通信。这种时候，需要使用端口映射等手段，实现主机的内网穿透。</p>
+<p>更为麻烦的情况，是路由器的IP也不是公网IP，而是网络运营商提供的内网IP，端口映射方法也无法生效。</p>
+<h2 id="公网ip和wan口的ip相同端口映射"><a class="markdownIt-Anchor" href="#公网ip和wan口的ip相同端口映射"></a> 公网IP和WAN口的IP相同（端口映射）</h2>
+<p>当两IP相同时，可使用端口映射的方式实现Socket通信。</p>
+<p>供应商为了节省公网IP，有时会分配一个内网IP给你，这个IP会分配到路由器的WAN口上。</p>
+<p><strong>WAN口IP</strong>：登录路由器（浏览器输入192.168.1.1或192.168.0.0），可查看WAN口IP。</p>
+<p><strong>公网IP</strong>：百度搜索IP，可在网页中查看到公网IP。</p>
+<p>如若二者一致，则可通过端口映射的方式，完成通信。</p>
+<p>在路由器管理界面的NAT设置处找到 端口映射 或者 虚拟服务器 设置。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg" alt="服务器与客户端代码输出"></p>
+<p>如上图，将对应WAN口下主机的内网IP和想使用的端口输入内部服务器IP和内部端口，外部端口尽量选择一个9000以上的数字。</p>
+<p>如此，就实现了将路由器公网IP的端口映射到局域网下对应端口的操作。</p>
+<p>此时的服务器与客户端代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket_server.bind((<span class="string">&quot;内网IP&quot;</span>, 内部端口))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket_client.connect((<span class="string">&quot;公网IP&quot;</span>, 外部端口))</span><br></pre></td></tr></table></figure>
+<p>代码详见上一节；</p>
+<p>由此可实现通信。</p>
+<h2 id="公网ip和wan口的ip不同ngrok"><a class="markdownIt-Anchor" href="#公网ip和wan口的ip不同ngrok"></a> 公网IP和WAN口的IP不同（ngrok）</h2>
+<p>如若二者不同，那只能求诸其他方式；下文中采用的方式亲测有效。</p>
+<ol>
+<li>首先需要在服务器上安装 ngrok。</li>
+</ol>
+<p>或者直接通过命令行安装：</p>
+<ol start="2">
+<li>获取 ngrok 认证令牌<br>
+为了使用 ngrok，你需要注册一个 ngrok 账户并获取认证令牌。登录到 ngrok 后，获取 authtoken（认证令牌）并将其添加到本地配置中。</li>
+</ol>
+<figure class="highlight console"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">ngrok config add-authtoken &lt;your-auth-token&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如此便可以将服务器的 Flask 服务通过 ngrok 隧道暴露到公网，并通过这个 URL 来实现通信。</p>
+<p>服务器代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, jsonify, request</span><br><span class="line"><span class="keyword">from</span> pyngrok <span class="keyword">import</span> ngrok</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/send_data&#x27;</span>, methods=[<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">send_data</span>():</span><br><span class="line">    data = request.json</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Received data from B: <span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> jsonify(&#123;<span class="string">&quot;status&quot;</span>: <span class="string">&quot;success&quot;</span>, <span class="string">&quot;received_data&quot;</span>: data&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="comment"># 启动 ngrok 隧道，将本地的 5000 端口暴露到公网</span></span><br><span class="line">    public_url = ngrok.connect(<span class="number">30005</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot; * ngrok tunnel \&quot;<span class="subst">&#123;public_url&#125;</span>\&quot; -&gt; \&quot;http://127.0.0.1:5000\&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 启动 Flask 服务</span></span><br><span class="line">    app.run(port=<span class="number">30005</span>)</span><br></pre></td></tr></table></figure>
+<p>上述代码会有输出：</p>
+<p>ngrok tunnel &quot;{public_url}&quot; -&gt; &quot;<a target="_blank" rel="noopener" href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>&quot;</p>
+<p>将上述输出的public_url填到下方。（注意/send_data不要遗漏）</p>
+<p>客户端代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment"># 电脑 A 暴露的 ngrok URL</span></span><br><span class="line">url = <span class="string">&quot;public_url/send_data&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 向电脑 A 发送 POST 请求</span></span><br><span class="line">response = requests.post(url, json=&#123;<span class="string">&quot;message&quot;</span>: <span class="string">&quot;Hello from B!&quot;</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 打印返回的结果</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Response from A:&quot;</span>, response.json())</span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
@@ -146,7 +183,22 @@
         <!-- 文章目录 -->
         
         <!-- Table of Contents -->
-        
+        <h2 id="socket通信工具"><a class="markdownIt-Anchor" href="#socket通信工具"></a> Socket通信工具</h2>
+<p>Socket是应用层与TCP/IP协议族通信的中间软件抽象层，它是一组接口。</p>
+<p>在下图中，它位于应用层与传输层之间，它把复杂的TCP/IP协议族隐藏在Socket接口后面，对用户来说，一组简单的接口就是全部，让Socket去组织数据，以符合指定的协议。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg" alt="计算机网络结构"></p>
+<p>关于TCP、IP是什么：<a href="https://ivel-li.github.io/2024/11/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/">https://ivel-li.github.io/2024/11/29/计算机网络结构/</a></p>
+<h2 id="python-通信代码"><a class="markdownIt-Anchor" href="#python-通信代码"></a> Python 通信代码</h2>
+<p>Socket通信，需要一个服务器端和客户端。</p>
+<p>服务器端示例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"> </span><br><span class="line">socket_server = socket.socket()</span><br><span class="line">socket_server.bind((<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">11451</span>))</span><br><span class="line"><span class="comment"># 监听端口</span></span><br><span class="line">socket_server.listen(<span class="number">1</span>)</span><br><span class="line"><span class="comment"># 等待客户端连接，accept方法返回二元元组(连接对象, 客户端地址信息)</span></span><br><span class="line"></span><br><span class="line">conn, address = socket_server.accept()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;接收到了客户端的连接，客户端的信息：<span class="subst">&#123;address&#125;</span>&#125;&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="comment"># 接收消息</span></span><br><span class="line">    data: <span class="built_in">str</span> = conn.recv(<span class="number">1024</span>).decode(<span class="string">&quot;UTF-8&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;客户端发来消息：<span class="subst">&#123;data&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="comment"># 回复消息</span></span><br><span class="line">    msg = <span class="built_in">input</span>(<span class="string">&quot;已收到信息。&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> msg == <span class="string">&#x27;exit&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    conn.send(msg.encode(<span class="string">&quot;UTF-8&quot;</span>))  <span class="comment"># encode将字符串编码为字节数组对象</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">conn.close()</span><br><span class="line">socket_server.close()</span><br></pre></td></tr></table></figure>
+<p>上述代码中，bind函数将服务器的ip和端口号与socket对象绑定，在局域网（同一路由器）下可直接使用内网ip（如192开头ip，127.0.0.1的本机环路ip）通信，端口号的选择注意不要与其他进程端口号冲突。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket_server.bind(<span class="string">&#x27;ip&#x27;</span>,端口号)</span><br></pre></td></tr></table></figure>
+<p>客户端实例代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="comment"># 创建socket对象</span></span><br><span class="line">socket_client = socket.socket()</span><br><span class="line"><span class="comment"># 连接到服务器</span></span><br><span class="line">socket_client.connect((<span class="string">&quot;127.0.0.1&quot;</span>, <span class="number">11451</span>))</span><br><span class="line"> </span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    send_msg = <span class="built_in">input</span>(<span class="string">&quot;要发送给服务端的消息：&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> send_msg == <span class="string">&quot;exit&quot;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="comment"># 发送消息</span></span><br><span class="line">    socket_client.send(send_msg.encode(<span class="string">&quot;UTF-8&quot;</span>))</span><br><span class="line">    <span class="comment"># 接受消息</span></span><br><span class="line">    recv_data = socket_client.recv(<span class="number">1024</span>).decode(<span class="string">&quot;UTF-8&quot;</span>)    <span class="comment"># 1024是缓冲区大小，一般就填1024， recv是阻塞式</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;服务端回复的消息是：<span class="subst">&#123;recv_data&#125;</span>&quot;</span>)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 关闭连接</span></span><br><span class="line">socket_client.close()</span><br></pre></td></tr></table></figure>
+<p>示例代码中使用环路ip 127.0.0.1 进行本机与本机通信，故可在同一台主机下分别运行这两个代码尝试完成通信。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C2.jpg" alt="服务器与客户端代码输出"></p>
+
       
     </div>
     <footer class="article-footer">
