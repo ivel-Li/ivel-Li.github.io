@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Ivel">
 <meta property="og:description" content="前文中介绍了怎么使用socket在相同局域网下通信，接下来介绍在不同局域网下如何通信。 这个问题的源头在于IP，在路由器下的主机并没有实际的公网IP，而是一般由数据传输到有公网IP的路由器，再由路由器根据内网IP与主机通信。这种时候，需要使用端口映射等手段，实现主机的内网穿透。 更为麻烦的情况，是路由器的IP也不是公网IP，而是网络运营商提供的内网IP，端口映射方法也无法生效。  公网IP和WAN">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/1.jpg">
 <meta property="article:published_time" content="2024-12-05T06:33:27.000Z">
-<meta property="article:modified_time" content="2024-12-10T05:45:36.806Z">
+<meta property="article:modified_time" content="2024-12-11T12:15:58.074Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg">
+<meta name="twitter:image" content="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/1.jpg">
   
     <link rel="alternate" href="https://ivel-li.github.io/atom.xml" title="Ivel" type="application/atom+xml">
   
@@ -122,7 +122,7 @@
 <p><strong>公网IP</strong>：百度搜索IP，可在网页中查看到公网IP。</p>
 <p>如若二者一致，则可通过端口映射的方式，完成通信。</p>
 <p>在路由器管理界面的NAT设置处找到 端口映射 或者 虚拟服务器 设置。</p>
-<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg" alt="服务器与客户端代码输出"></p>
+<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/1.jpg" alt="服务器与客户端代码输出"></p>
 <p>如上图，将对应WAN口下主机的内网IP和想使用的端口输入内部服务器IP和内部端口，外部端口尽量选择一个9000以上的数字。</p>
 <p>如此，就实现了将路由器公网IP的端口映射到局域网下对应端口的操作。</p>
 <p>此时的服务器与客户端代码：</p>
@@ -163,6 +163,15 @@
     
 <nav id="article-nav">
   
+    <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model
+        
+      </div>
+    </a>
+  
   
     <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
@@ -184,7 +193,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Prompt-Engineering/">Prompt Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -212,6 +221,10 @@
       <ul>
         
           <li>
+            <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/">LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model</a>
+          </li>
+        
+          <li>
             <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（不同局域网下）</a>
           </li>
         
@@ -225,10 +238,6 @@
         
           <li>
             <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/">robot learning lab note</a>
-          </li>
-        
-          <li>
-            <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</a>
           </li>
         
       </ul>

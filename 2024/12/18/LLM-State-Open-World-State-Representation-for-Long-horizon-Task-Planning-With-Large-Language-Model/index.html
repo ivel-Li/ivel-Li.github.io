@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model | Ivel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="这篇文章的真实环境演示视频链接：https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;QkN-8pxV3Mo  摘要 本研究解决了在开放的家庭环境中使用大型语言模型（LLM）进行长时间任务规划的问题。现有的工作未能明确跟踪关键对象及其属性，导致在长时间任务中做出错误的决策，或者依赖大量工程化的状态特征和反馈，这并不具有通用性。我们提出了一种开放的状态表示方法，该方法利用LLM的上下文理解">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model">
+<meta property="og:url" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/index.html">
+<meta property="og:site_name" content="Ivel">
+<meta property="og:description" content="这篇文章的真实环境演示视频链接：https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;QkN-8pxV3Mo  摘要 本研究解决了在开放的家庭环境中使用大型语言模型（LLM）进行长时间任务规划的问题。现有的工作未能明确跟踪关键对象及其属性，导致在长时间任务中做出错误的决策，或者依赖大量工程化的状态特征和反馈，这并不具有通用性。我们提出了一种开放的状态表示方法，该方法利用LLM的上下文理解">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/1.jpg">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/2.jpg">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/3.jpg">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/4.jpg">
+<meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/5.jpg">
+<meta property="article:published_time" content="2024-12-18T08:19:24.000Z">
+<meta property="article:modified_time" content="2024-12-19T07:52:36.844Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/1.jpg">
+  
+    <link rel="alternate" href="https://ivel-li.github.io/atom.xml" title="Ivel" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="https://ivel-li.github.io/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="https://ivel-li.github.io/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://ivel-li.github.io/fancybox/jquery.fancybox.min.css">
+
+  
+  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css" rel="stylesheet" type="text/css">
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="https://ivel-li.github.io/" id="logo">Ivel</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="https://ivel-li.github.io/" id="subtitle">Greeting, welcome to my blog</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="https://ivel-li.github.io/">Home</a>
+        
+          <a class="main-nav-link" href="https://ivel-li.github.io/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="https://ivel-li.github.io/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ivel-Li.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/" class="article-date">
+  <time class="dt-published" datetime="2024-12-18T08:19:24.000Z" itemprop="datePublished">2024-12-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Prompt-Engineering/">Prompt Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <p>这篇文章的真实环境演示视频链接：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QkN-8pxV3Mo">https://www.youtube.com/watch?v=QkN-8pxV3Mo</a></p>
+<h2 id="摘要"><a class="markdownIt-Anchor" href="#摘要"></a> 摘要</h2>
+<p>本研究解决了在开放的家庭环境中使用大型语言模型（LLM）进行长时间任务规划的问题。现有的工作未能明确跟踪关键对象及其属性，导致在长时间任务中做出错误的决策，或者依赖大量工程化的状态特征和反馈，这并不具有通用性。我们提出了一种开放的状态表示方法，该方法利用LLM的上下文理解和历史行动推理固有能力，持续扩展和更新对象属性。我们提出的表示方法能够全面记录对象的属性及其变化，支持对导致当前状态的行动序列进行可靠的回顾性总结。这使得持续更新的世界模型成为可能，从而增强任务规划中的决策上下文理解。通过在模拟和现实任务规划场景中进行实验，我们验证了我们的模型，并展示了在需要长时间状态跟踪和推理的各种任务中，相较于基准方法的显著改进。</p>
+<h2 id="introduction"><a class="markdownIt-Anchor" href="#introduction"></a> Introduction</h2>
+<p><strong>任务规划的重要性</strong>：在开放家庭环境中进行任务规划能高效地自动化日常琐事，提升生活质量，并促进身体有障碍人士的无障碍体验。</p>
+<p><strong>存在的问题</strong>：</p>
+<ol>
+<li>
+<p>未知的转移模型、多样的目标和有限预定义操作类型（arbitrary objects with limited predefined action types）的任意物体等因素为任务规划构成重大挑战。当前大型语言模型（LLM）的高级能力，如常识推理，使它们能够应对这些挑战。</p>
+</li>
+<li>
+<p>基于LLM的方法要么利用大量的真实对象，要么手动设计状态表示，在开放世界环境中的长期任务上仍显不足。由于部分可观察信息，LLM更难管文本以有效地追踪和分析对象属性。</p>
+</li>
+</ol>
+<p>因此，发现一种能够增强对象属性跟踪并结合全面上下文理解的新表示形式，是该领域的迫切需求。这将改善LLM在关键任务规划任务中的决策能力，使系统能够更好地适应新任务和新环境。</p>
+<p><strong>工作内容</strong>：</p>
+<p>使用LLM，提出了一种新的开放环境任务规划状态表示方法。</p>
+<p><strong>通过试错方式更新世界模型，从而更准确地估计当前状态、动作前提条件和未知的转换效果。我们的方法结合了结构化的对象中心表示和非结构化的历史操作和观察到的操作失败的总结。</strong></p>
+<p>结构化的对象中心表示将世界描述为一个对象列表，每个对象具有不同的属性，指示它们的当前状态。例如，在图1中的任务“加热一些食物并传递给用户”中，状态可以表示为“食物：在微波炉中，加热中”，其中“在微波炉中”和“加热中”是食物项目的关键属性。为了构建这种结构化表示，我们首先使用LLM作为<strong>Attention</strong>从图像对象检测结果的长列表中识别相关对象。然后，我们将LLM用作<strong>StateEncoder</strong>，以识别的对象和机器人执行的操作作为输入，并以新的对象属性作为输出。例如，LLM接收“机器人将食物放入微波炉并打开开关”并输出状态“食物：在微波炉中，加热中”。这种对象中心表示是开放的，因为对象的数量及其属性可以动态扩展和更新，为LLM作为<strong>Policy</strong>生成可操作的命令提供了更灵活的表示。</p>
+<p>进一步的问题：1. 任务序列尺度增加，导致输入信息过多，预测对象属性变得不准确；2. 结构化表示可能会缺失重要信息。</p>
+<p>提出额外的非结构化表示，总结最近失败的机器人动作和失败原因。使LLM通过step-bt-step的思维链过程更准确的预测对象属性。失败推理可以在我们的非结构化摘要中捕获，并用于告知LLM生成新的用于复杂开放世界任务的动作策略。</p>
+<p><strong>总而言之，我们提出了一种新的状态表示，用于在开放世界中通过LLM进行任务规划，该表示由LLM自动构建和更新，用于对象状态跟踪和推理。这种表示兼容新的对象属性，并结合了回顾性摘要，以更好地预测属性和恢复故障，从而显著提高开放世界场景中长周期任务规划的性能。我们假设存在一个完美的基于图像的对象检测器和强大的低级别动作控制器。</strong></p>
+<h2 id="related-work"><a class="markdownIt-Anchor" href="#related-work"></a> Related Work</h2>
+<ol>
+<li>任务规划与LLMs</li>
+</ol>
+<p>例如通过将指令分解为动作序列，生成可执行代码，将自然语言翻译为正式规格，并为经典规划器提供辅助信息。大多数研究假设环境中所有对象及其准确属性都可用或直接感知检测，并用作LLMs推理和规划的状态表示。</p>
+<p><strong>存在的问题：</strong> 然而，这些预定义的状态表示无法捕捉现实世界复杂性。一些研究采用自我反思技术或外部模型进行失败解释，但这些非结构化的总结对于需要明确状态跟踪的复杂、长远任务可能效率低下。相关研究接受编码图像作为状态表示并输出后续动作，其中感知和推理模块被耦合在一起。然而，这些模型通常需要大量特定领域的多模态数据，并且可能缺乏在不同领域中的泛化能力。</p>
+<p>为了在不失去泛化性的情况下实现灵活性，我们的工作依赖于感知-推理分解，并作为感知和推理之间的接口。推理方面，我们的状态表示在结构和灵活性之间取得了平衡，从而提高了效率和泛化能力。</p>
+<ol start="2">
+<li>任务规划中的状态表示</li>
+</ol>
+<p>任务规划，即符号规划，涉及基于初始状态和动作效果描述来决定动作序列以实现目标。状态表示是任务规划的关键方面，因为它们定义了规划发生的环境。在经典规划中，这些表示是预定义的，通常使用谓词（predicate，描述了主语的状态活性位）来跟踪状态变化。基于LLM的规划系统可以适应多种问题描述，避免定义所有谓词和转换模型的需要。一些方法在提示中使用详尽的对象和属性描述，而其他方法依赖于人工设计和特定任务的状态表示。最近的方法探索了具有反思的动态记忆、场景图中的语义搜索、多感官总结和训练任务条件状态描述，以实现更灵活的状态表示。</p>
+<p>**存在的问题：**然而，现有基于LLM的规划系统面临的一个主要挑战是它们无法明确地跟踪灵活的状态变化，特别是涉及未定义的谓词时。这一限制影响了开放世界规划中的一致性和效率。在这项工作中，我们探索了LLM的 <strong>动作推理</strong> 能力，以自动和明确地构建和跟踪具有全面上下文理解的结构化对象，使LLM能够有效地解决长时间跨度的任务。</p>
+<h2 id="problem-formulation"><a class="markdownIt-Anchor" href="#problem-formulation"></a> PROBLEM FORMULATION</h2>
+<p>…………</p>
+<h2 id="method"><a class="markdownIt-Anchor" href="#method"></a> METHOD</h2>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/1.jpg" alt="框架总览"></p>
+<h2 id="experiment-and-evaluation"><a class="markdownIt-Anchor" href="#experiment-and-evaluation"></a> Experiment and Evaluation</h2>
+<h3 id="stimulation-experiments"><a class="markdownIt-Anchor" href="#stimulation-experiments"></a> Stimulation Experiments</h3>
+<ol>
+<li>实验配置</li>
+</ol>
+<p>我们使用VirtualHome [36]（一个大规模的家庭仿真平台，包含各种互动对象、容器和房间。X. Puig, K. Ra, M. Boben, J. Li, T. Wang, S. Fidler, and A. Torralba,<br>
+“Virtualhome: Simulating household activities via programs,” in Pro-<br>
+ceedings of the IEEE Conference on Computer Vision and Pattern<br>
+Recognition, 2018, pp. 8494–8502）来评价我们的方法。我们关注任务规划的性能，并用仿真API调用替换了感知模块和低级控制器。观测和动作空间的具体细节可以在第三部分中查看。机器人可以检测到同一房间内的物体，但无法检测到封闭容器内的物体。实验在5张房屋地图中进行，如图5所示，每张地图包含15个任务。任务被分为简单(少于30个步骤) 和困难 (多于30个步骤) 水平的综合评估。</p>
+<p>我们将我们的方法与3个基线进行比较：InnerMonologue <a href>4</a>，ProgPrompt [5]，以及不带我们的LLM-State表示的LLM的一个简单版本。InnerMonologue在长跨度任务中经常超过最大token限制。为了解决这个问题，我们维护了一个窗口，称为InnerMonologue-W。这个问题在使用长历史观察和行动作为状态的方法中很常见。ProgPrompt生成代码而不是自由形式的文本来执行任务计划。为了公平比较，我们还为ProgPrompt添加了重新计划过程。对于简单的LLM，我们将观察和行动历史直接提示给LLM，类似于以前的工作 [6]。</p>
+<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+[4]W. Huang, F. Xia, T. Xiao, H. Chan, J. Liang, P. Florence, A. Zeng,
+J. Tompson, I. Mordatch, Y. Chebotar et al., “Inner monologue:
+Embodied reasoning through planning with language models,” in
+Conference on Robot Learning. PMLR, 2023, pp. 1769–1782.
+<p>[5] I. Singh, V. Blukis, A. Mousavian, A. Goyal, D. Xu, J. Tremblay,<br>
+D. Fox, J. Thomason, and A. Garg, “Progprompt: Generating situated<br>
+robot task plans using large language models,” in 2023 IEEE Interna-<br>
+tional Conference on Robotics and Automation (ICRA). IEEE, 2023,<br>
+pp. 11 523–11 530.</p>
+<p>[6] C. H. Song, J. Wu, C. Washington, B. M. Sadler, W.-L. Chao,<br>
+and Y. Su, “Llm-planner: Few-shot grounded planning for embodied<br>
+agents with large language models,” in Proceedings of the IEEE/CVF<br>
+International Conference on Computer Vision (ICCV), October 2023</p>
+</div>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/2.jpg" alt="框架总览"></p>
+<ol start="2">
+<li>模拟实验结果：</li>
+</ol>
+<p>模拟实验的主要结果如 Table I 所示。我们将提出的方法的性能与基线进行了比较，可以得出以下结论：</p>
+<p><strong>我们的方法在简单和复杂任务上都优于基线方法。</strong> 对于简单任务，我们的方法成功率（SR）达到92.5%，超过了Inner Monologue的65%和ProgPrompt的85%，这表明我们的状态表示是有效的。对于复杂任务，我们的方法实现了令人印象深刻的77.14%成功率，而Inner Monologue和ProgPrompt未能完成任何任务，这证明了我们方法在处理复杂任务时的有效性。Inner Monologue和ProgPrompt未能完成长时间任务可归因于其缺乏状态跟踪和上下文理解。我们的方法在包含多个步骤或需要状态跟踪的任务中特别有效，将困难任务的成功率从8.71%提高到77.14%。没有状态跟踪的情况下，基准方法在复杂任务中会失败，而我们的方法由于明确的状态跟踪和推理而成功完成它们。</p>
+<p>我们进行了一个消融研究，以评估我们状态表示中各个组件的影响。该研究比较了3种配置：没有回顾性总结（w/o Summary）、没有对象条目（w/o Objects）和我们的完整状态表示（Our）。如 Table II 所示，非结构化的回顾性总结和结构化的对象条目在我们的方法中起着关键作用。在较简单的任务中，性能差异较小。然而，在复杂任务中，两个组件的重要性变得显而易见。没有回顾性总结时，成功率仅为14.29%，强调了其在处理复杂状态跟踪中的重要作用。没有对象条目的模型达到了64.86%的成功率，而我们的完整状态表示达到了77.14%，这表明在需要多步骤规划和复杂操作的任务中，拥有结构化状态表示的重要性。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/3.jpg" alt="对比试验"></p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/4.jpg" alt="消融实验"></p>
+<h3 id="真实实验结果"><a class="markdownIt-Anchor" href="#真实实验结果"></a> 真实实验结果：</h3>
+<ol>
+<li>真实世界中的实验设置：</li>
+</ol>
+<p>为了验证我们的系统在实际世界中的效果，我们使用现成的（out-of-shelf）感知模型和（low-level）低级控制器。我们使用 Fetch mobile manipulator robot在一个由4个房间组成的典型真实家庭环境中设计了我们的实验，这些房间分别是厨房、会议室、客厅和办公室。每个房间中放置了各种各样的物品。系统集成在IV-D中讨论。所有决策、感知和低级控制的计算均在一台配备NVIDIA RTX 4090 GPU的Linux机器上完成。感知模块在任务开始时以及机器人进入新房间或打开封闭容器后被调用。出于安全原因，当生成的操作指令不在我们学习的技能库中或违反了现实世界中的规则时，人工监控将直接否决执行，该操作将返回失败。这个过程可以通过自适应分布外（OOD）检测[38]自动实现。</p>
+<p>我们将三个基线方法与我们提出的方法进行了比较。<br>
+我们在真实机器人上评估了我们的方法，任务是：“从冰箱里拿些食物并把它带到沙发上。”这个任务运行在一个具有挑战性的开放世界环境中，开始时没有食物，没有冰箱，也没有加热设备。这也是一个长时间任务，需要超过20次真实机器人操作才能完成。对于每个真实可执行的机器人操作，我们允许3次重试。最大步骤数为30。成功与否由人类进行评估，以检查在现实世界中目标状态是否满足。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/5.jpg" alt="实验结果"></p>
+<ol start="2">
+<li>实物机器人系统实验结果:</li>
+</ol>
+<p>实物机器人系统实验的结果如 Table III 所示。所有基准点都无法解决这一任务，因为它们无法意识到当机器人拿着食物时，不能打开微波炉。缺乏明确的状态跟踪导致它们无法将失败动作open(microwave)与之前的动作pick up(food)联系起来。相比之下，我们的方法自动跟踪对象的非预定义符号属性{food: in hand}，从而能够捕捉到导致微波炉无法打开的实际原因。在如图6所示的实验中，机器人有效地完成了扩展任务。如图6e所示，状态表示有助于语言模型理解打开微波炉未成功的尝试。鉴于明确的状态{food: in hand}，它制定了一个新策略：首先将食物放在桌子上，然后尝试打开微波炉并完成剩余步骤，从而成功完成任务。</p>
+<p>感知与操作模块：</p>
+<p>感知模块使用RGB-Depth摄像头数据，为任务规划提供文本对象检测结果，并为每个对象记录3D坐标，从而增强导航和操作。机器人通过调整6个不同角度覆盖360度范围。<br>
+图像标签使用模型（Recognize anything: A strong image tagging<br>
+model,）获取，并且Grounding DINO提供边界框。最后，Segment-Anything 提取掩码，并与RGB-D数据融合进行3D帧后投影。由感知模块提供的检测对象的位置和3D坐标使用ROS内置路径和运动规划工具进行导航。</p>
+<p>对于操作技能，采用了模仿学习策略（A reduction of imitation learning<br>
+and structured prediction to no-regret online learning），使得复杂的动作如开微波炉或从冰箱中抓取物体成为可能。这涉及使用VR控制器，允许人类示教者以6自由度精确控制机器人的抓取器，并通过屏幕远程监控其摄像头视野。所收集的数据用于训练使用模仿学习的模型，输入包括RGB-D图像和机器人手臂的关节状态，并预测关节角度移动序列。每个原始动作平均收集30次轨迹演示，使用真实机器人进行。</p>
+<h2 id="conclusion"><a class="markdownIt-Anchor" href="#conclusion"></a> Conclusion</h2>
+<p>在本文中，我们提出了一种新颖的、动态的、可扩展的表示方法，用于在开放世界中进行任务规划。我们提出的表示方法根据<strong>可观察的动作不断扩展和更新对象属性，并利用LLM的上下文理解和历史动作推理能力</strong>。实验结果表明，我们提出的表示方法显著优于基准方法，提升了LLM的任务规划性能，尤其是在长时间任务上。展望未来，一个潜在的改进是<strong>将对象关系包含在状态表示中</strong>。这类信息可以极大地增强LLM的推理能力和上下文理解，解决更具挑战性的任务规划问题，并进一步提升性能。我们相信，所提出的表示方法为开放世界任务规划中的LLM未来研究提供了一个有前景的方向。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/" data-id="cm4v0xsc400002guu8rvsaray" data-title="LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">计算机如何通信（不同局域网下）</div>
+    </a>
+  
+</nav>
+
+  
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Prompt-Engineering/">Prompt Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/12/">December 2024</a></li><li class="archive-list-item"><a class="archive-list-link" href="https://ivel-li.github.io/archives/2024/11/">November 2024</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/">LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（不同局域网下）</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E7%9B%B8%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（相同局域网下）</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/29/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84/">计算机网络结构</a>
+          </li>
+        
+          <li>
+            <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/">robot learning lab note</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2024 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="https://ivel-li.github.io/" class="mobile-nav-link">Home</a>
+  
+    <a href="https://ivel-li.github.io/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="https://ivel-li.github.io/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="https://ivel-li.github.io/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="https://ivel-li.github.io/js/script.js"></script>
+
+
+
+
+
+  </div>
+<!-- hexo injector body_end start --><script data-pjax src="https://registry.npmmirror.com/oh-my-live2d/latest/files"></script><script>const oml2d = OML2D.loadOml2d({libraryUrls:{"complete":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/complete.js","cubism2":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/cubism2.js","cubism5":"https://registry.npmmirror.com/oh-my-live2d/latest/files/lib/cubism5.js"},mobileDisplay:true,models:[{"path":"https://model.oml2d.com/koharu/model.json","mobilePosition":[0,0],"mobileScale":0.1,"mobileStageStyle":{"width":180,"height":166},"motionPreloadStrategy":"IDLE","position":[0,0],"scale":0.12,"stageStyle":{"width":250,"height":250}},{"path":"https://model.oml2d.com/HK416-2-destroy/model.json","scale":0.12,"position":[0,0],"stageStyle":{"width":250},"mobileScale":0.08,"mobilePosition":[0,0],"mobileStageStyle":{"width":180}},{"path":"https://model.oml2d.com/rem_2/model.json","scale":0.12,"position":[0,220],"mobileScale":0.08,"mobilePosition":[-5,5],"mobileStageStyle":{"width":180},"stageStyle":{"width":250}}],parentElement:document.body,primaryColor:"var(--btn-bg)",sayHello:false,tips:{style: {"width":230,"height":120,"left":"calc(50% - 20px)","top":"-100px"},mobileStyle: {"width":180,"height":80,"left":"calc(50% - 30px)","top":"-100px"},idleTips:{interval:15000,message:function(){
+  return axios.get('https://v1.hitokoto.cn?c=i')
+    .then(function (response) {
+      return response.data.hitokoto ;
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+}
+}}});</script><!-- hexo injector body_end end --></body>
+</html>

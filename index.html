@@ -79,6 +79,144 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/" class="article-date">
+  <time class="dt-published" datetime="2024-12-18T08:19:24.000Z" itemprop="datePublished">2024-12-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Prompt-Engineering/">Prompt Engineering</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="p-name article-title" href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/">LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <!-- 文章目录 -->
+        
+        <!-- Table of Contents -->
+        <p>这篇文章的真实环境演示视频链接：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=QkN-8pxV3Mo">https://www.youtube.com/watch?v=QkN-8pxV3Mo</a></p>
+<h2 id="摘要"><a class="markdownIt-Anchor" href="#摘要"></a> 摘要</h2>
+<p>本研究解决了在开放的家庭环境中使用大型语言模型（LLM）进行长时间任务规划的问题。现有的工作未能明确跟踪关键对象及其属性，导致在长时间任务中做出错误的决策，或者依赖大量工程化的状态特征和反馈，这并不具有通用性。我们提出了一种开放的状态表示方法，该方法利用LLM的上下文理解和历史行动推理固有能力，持续扩展和更新对象属性。我们提出的表示方法能够全面记录对象的属性及其变化，支持对导致当前状态的行动序列进行可靠的回顾性总结。这使得持续更新的世界模型成为可能，从而增强任务规划中的决策上下文理解。通过在模拟和现实任务规划场景中进行实验，我们验证了我们的模型，并展示了在需要长时间状态跟踪和推理的各种任务中，相较于基准方法的显著改进。</p>
+<h2 id="introduction"><a class="markdownIt-Anchor" href="#introduction"></a> Introduction</h2>
+<p><strong>任务规划的重要性</strong>：在开放家庭环境中进行任务规划能高效地自动化日常琐事，提升生活质量，并促进身体有障碍人士的无障碍体验。</p>
+<p><strong>存在的问题</strong>：</p>
+<ol>
+<li>
+<p>未知的转移模型、多样的目标和有限预定义操作类型（arbitrary objects with limited predefined action types）的任意物体等因素为任务规划构成重大挑战。当前大型语言模型（LLM）的高级能力，如常识推理，使它们能够应对这些挑战。</p>
+</li>
+<li>
+<p>基于LLM的方法要么利用大量的真实对象，要么手动设计状态表示，在开放世界环境中的长期任务上仍显不足。由于部分可观察信息，LLM更难管文本以有效地追踪和分析对象属性。</p>
+</li>
+</ol>
+<p>因此，发现一种能够增强对象属性跟踪并结合全面上下文理解的新表示形式，是该领域的迫切需求。这将改善LLM在关键任务规划任务中的决策能力，使系统能够更好地适应新任务和新环境。</p>
+<p><strong>工作内容</strong>：</p>
+<p>使用LLM，提出了一种新的开放环境任务规划状态表示方法。</p>
+<p><strong>通过试错方式更新世界模型，从而更准确地估计当前状态、动作前提条件和未知的转换效果。我们的方法结合了结构化的对象中心表示和非结构化的历史操作和观察到的操作失败的总结。</strong></p>
+<p>结构化的对象中心表示将世界描述为一个对象列表，每个对象具有不同的属性，指示它们的当前状态。例如，在图1中的任务“加热一些食物并传递给用户”中，状态可以表示为“食物：在微波炉中，加热中”，其中“在微波炉中”和“加热中”是食物项目的关键属性。为了构建这种结构化表示，我们首先使用LLM作为<strong>Attention</strong>从图像对象检测结果的长列表中识别相关对象。然后，我们将LLM用作<strong>StateEncoder</strong>，以识别的对象和机器人执行的操作作为输入，并以新的对象属性作为输出。例如，LLM接收“机器人将食物放入微波炉并打开开关”并输出状态“食物：在微波炉中，加热中”。这种对象中心表示是开放的，因为对象的数量及其属性可以动态扩展和更新，为LLM作为<strong>Policy</strong>生成可操作的命令提供了更灵活的表示。</p>
+<p>进一步的问题：1. 任务序列尺度增加，导致输入信息过多，预测对象属性变得不准确；2. 结构化表示可能会缺失重要信息。</p>
+<p>提出额外的非结构化表示，总结最近失败的机器人动作和失败原因。使LLM通过step-bt-step的思维链过程更准确的预测对象属性。失败推理可以在我们的非结构化摘要中捕获，并用于告知LLM生成新的用于复杂开放世界任务的动作策略。</p>
+<p><strong>总而言之，我们提出了一种新的状态表示，用于在开放世界中通过LLM进行任务规划，该表示由LLM自动构建和更新，用于对象状态跟踪和推理。这种表示兼容新的对象属性，并结合了回顾性摘要，以更好地预测属性和恢复故障，从而显著提高开放世界场景中长周期任务规划的性能。我们假设存在一个完美的基于图像的对象检测器和强大的低级别动作控制器。</strong></p>
+<h2 id="related-work"><a class="markdownIt-Anchor" href="#related-work"></a> Related Work</h2>
+<ol>
+<li>任务规划与LLMs</li>
+</ol>
+<p>例如通过将指令分解为动作序列，生成可执行代码，将自然语言翻译为正式规格，并为经典规划器提供辅助信息。大多数研究假设环境中所有对象及其准确属性都可用或直接感知检测，并用作LLMs推理和规划的状态表示。</p>
+<p><strong>存在的问题：</strong> 然而，这些预定义的状态表示无法捕捉现实世界复杂性。一些研究采用自我反思技术或外部模型进行失败解释，但这些非结构化的总结对于需要明确状态跟踪的复杂、长远任务可能效率低下。相关研究接受编码图像作为状态表示并输出后续动作，其中感知和推理模块被耦合在一起。然而，这些模型通常需要大量特定领域的多模态数据，并且可能缺乏在不同领域中的泛化能力。</p>
+<p>为了在不失去泛化性的情况下实现灵活性，我们的工作依赖于感知-推理分解，并作为感知和推理之间的接口。推理方面，我们的状态表示在结构和灵活性之间取得了平衡，从而提高了效率和泛化能力。</p>
+<ol start="2">
+<li>任务规划中的状态表示</li>
+</ol>
+<p>任务规划，即符号规划，涉及基于初始状态和动作效果描述来决定动作序列以实现目标。状态表示是任务规划的关键方面，因为它们定义了规划发生的环境。在经典规划中，这些表示是预定义的，通常使用谓词（predicate，描述了主语的状态活性位）来跟踪状态变化。基于LLM的规划系统可以适应多种问题描述，避免定义所有谓词和转换模型的需要。一些方法在提示中使用详尽的对象和属性描述，而其他方法依赖于人工设计和特定任务的状态表示。最近的方法探索了具有反思的动态记忆、场景图中的语义搜索、多感官总结和训练任务条件状态描述，以实现更灵活的状态表示。</p>
+<p>**存在的问题：**然而，现有基于LLM的规划系统面临的一个主要挑战是它们无法明确地跟踪灵活的状态变化，特别是涉及未定义的谓词时。这一限制影响了开放世界规划中的一致性和效率。在这项工作中，我们探索了LLM的 <strong>动作推理</strong> 能力，以自动和明确地构建和跟踪具有全面上下文理解的结构化对象，使LLM能够有效地解决长时间跨度的任务。</p>
+<h2 id="problem-formulation"><a class="markdownIt-Anchor" href="#problem-formulation"></a> PROBLEM FORMULATION</h2>
+<p>…………</p>
+<h2 id="method"><a class="markdownIt-Anchor" href="#method"></a> METHOD</h2>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/1.jpg" alt="框架总览"></p>
+<h2 id="experiment-and-evaluation"><a class="markdownIt-Anchor" href="#experiment-and-evaluation"></a> Experiment and Evaluation</h2>
+<h3 id="stimulation-experiments"><a class="markdownIt-Anchor" href="#stimulation-experiments"></a> Stimulation Experiments</h3>
+<ol>
+<li>实验配置</li>
+</ol>
+<p>我们使用VirtualHome [36]（一个大规模的家庭仿真平台，包含各种互动对象、容器和房间。X. Puig, K. Ra, M. Boben, J. Li, T. Wang, S. Fidler, and A. Torralba,<br>
+“Virtualhome: Simulating household activities via programs,” in Pro-<br>
+ceedings of the IEEE Conference on Computer Vision and Pattern<br>
+Recognition, 2018, pp. 8494–8502）来评价我们的方法。我们关注任务规划的性能，并用仿真API调用替换了感知模块和低级控制器。观测和动作空间的具体细节可以在第三部分中查看。机器人可以检测到同一房间内的物体，但无法检测到封闭容器内的物体。实验在5张房屋地图中进行，如图5所示，每张地图包含15个任务。任务被分为简单(少于30个步骤) 和困难 (多于30个步骤) 水平的综合评估。</p>
+<p>我们将我们的方法与3个基线进行比较：InnerMonologue <a href>4</a>，ProgPrompt [5]，以及不带我们的LLM-State表示的LLM的一个简单版本。InnerMonologue在长跨度任务中经常超过最大token限制。为了解决这个问题，我们维护了一个窗口，称为InnerMonologue-W。这个问题在使用长历史观察和行动作为状态的方法中很常见。ProgPrompt生成代码而不是自由形式的文本来执行任务计划。为了公平比较，我们还为ProgPrompt添加了重新计划过程。对于简单的LLM，我们将观察和行动历史直接提示给LLM，类似于以前的工作 [6]。</p>
+<div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
+[4]W. Huang, F. Xia, T. Xiao, H. Chan, J. Liang, P. Florence, A. Zeng,
+J. Tompson, I. Mordatch, Y. Chebotar et al., “Inner monologue:
+Embodied reasoning through planning with language models,” in
+Conference on Robot Learning. PMLR, 2023, pp. 1769–1782.
+<p>[5] I. Singh, V. Blukis, A. Mousavian, A. Goyal, D. Xu, J. Tremblay,<br>
+D. Fox, J. Thomason, and A. Garg, “Progprompt: Generating situated<br>
+robot task plans using large language models,” in 2023 IEEE Interna-<br>
+tional Conference on Robotics and Automation (ICRA). IEEE, 2023,<br>
+pp. 11 523–11 530.</p>
+<p>[6] C. H. Song, J. Wu, C. Washington, B. M. Sadler, W.-L. Chao,<br>
+and Y. Su, “Llm-planner: Few-shot grounded planning for embodied<br>
+agents with large language models,” in Proceedings of the IEEE/CVF<br>
+International Conference on Computer Vision (ICCV), October 2023</p>
+</div>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/2.jpg" alt="框架总览"></p>
+<ol start="2">
+<li>模拟实验结果：</li>
+</ol>
+<p>模拟实验的主要结果如 Table I 所示。我们将提出的方法的性能与基线进行了比较，可以得出以下结论：</p>
+<p><strong>我们的方法在简单和复杂任务上都优于基线方法。</strong> 对于简单任务，我们的方法成功率（SR）达到92.5%，超过了Inner Monologue的65%和ProgPrompt的85%，这表明我们的状态表示是有效的。对于复杂任务，我们的方法实现了令人印象深刻的77.14%成功率，而Inner Monologue和ProgPrompt未能完成任何任务，这证明了我们方法在处理复杂任务时的有效性。Inner Monologue和ProgPrompt未能完成长时间任务可归因于其缺乏状态跟踪和上下文理解。我们的方法在包含多个步骤或需要状态跟踪的任务中特别有效，将困难任务的成功率从8.71%提高到77.14%。没有状态跟踪的情况下，基准方法在复杂任务中会失败，而我们的方法由于明确的状态跟踪和推理而成功完成它们。</p>
+<p>我们进行了一个消融研究，以评估我们状态表示中各个组件的影响。该研究比较了3种配置：没有回顾性总结（w/o Summary）、没有对象条目（w/o Objects）和我们的完整状态表示（Our）。如 Table II 所示，非结构化的回顾性总结和结构化的对象条目在我们的方法中起着关键作用。在较简单的任务中，性能差异较小。然而，在复杂任务中，两个组件的重要性变得显而易见。没有回顾性总结时，成功率仅为14.29%，强调了其在处理复杂状态跟踪中的重要作用。没有对象条目的模型达到了64.86%的成功率，而我们的完整状态表示达到了77.14%，这表明在需要多步骤规划和复杂操作的任务中，拥有结构化状态表示的重要性。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/3.jpg" alt="对比试验"></p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/4.jpg" alt="消融实验"></p>
+<h3 id="真实实验结果"><a class="markdownIt-Anchor" href="#真实实验结果"></a> 真实实验结果：</h3>
+<ol>
+<li>真实世界中的实验设置：</li>
+</ol>
+<p>为了验证我们的系统在实际世界中的效果，我们使用现成的（out-of-shelf）感知模型和（low-level）低级控制器。我们使用 Fetch mobile manipulator robot在一个由4个房间组成的典型真实家庭环境中设计了我们的实验，这些房间分别是厨房、会议室、客厅和办公室。每个房间中放置了各种各样的物品。系统集成在IV-D中讨论。所有决策、感知和低级控制的计算均在一台配备NVIDIA RTX 4090 GPU的Linux机器上完成。感知模块在任务开始时以及机器人进入新房间或打开封闭容器后被调用。出于安全原因，当生成的操作指令不在我们学习的技能库中或违反了现实世界中的规则时，人工监控将直接否决执行，该操作将返回失败。这个过程可以通过自适应分布外（OOD）检测[38]自动实现。</p>
+<p>我们将三个基线方法与我们提出的方法进行了比较。<br>
+我们在真实机器人上评估了我们的方法，任务是：“从冰箱里拿些食物并把它带到沙发上。”这个任务运行在一个具有挑战性的开放世界环境中，开始时没有食物，没有冰箱，也没有加热设备。这也是一个长时间任务，需要超过20次真实机器人操作才能完成。对于每个真实可执行的机器人操作，我们允许3次重试。最大步骤数为30。成功与否由人类进行评估，以检查在现实世界中目标状态是否满足。</p>
+<p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/5.jpg" alt="实验结果"></p>
+<ol start="2">
+<li>实物机器人系统实验结果:</li>
+</ol>
+<p>实物机器人系统实验的结果如 Table III 所示。所有基准点都无法解决这一任务，因为它们无法意识到当机器人拿着食物时，不能打开微波炉。缺乏明确的状态跟踪导致它们无法将失败动作open(microwave)与之前的动作pick up(food)联系起来。相比之下，我们的方法自动跟踪对象的非预定义符号属性{food: in hand}，从而能够捕捉到导致微波炉无法打开的实际原因。在如图6所示的实验中，机器人有效地完成了扩展任务。如图6e所示，状态表示有助于语言模型理解打开微波炉未成功的尝试。鉴于明确的状态{food: in hand}，它制定了一个新策略：首先将食物放在桌子上，然后尝试打开微波炉并完成剩余步骤，从而成功完成任务。</p>
+<p>感知与操作模块：</p>
+<p>感知模块使用RGB-Depth摄像头数据，为任务规划提供文本对象检测结果，并为每个对象记录3D坐标，从而增强导航和操作。机器人通过调整6个不同角度覆盖360度范围。<br>
+图像标签使用模型（Recognize anything: A strong image tagging<br>
+model,）获取，并且Grounding DINO提供边界框。最后，Segment-Anything 提取掩码，并与RGB-D数据融合进行3D帧后投影。由感知模块提供的检测对象的位置和3D坐标使用ROS内置路径和运动规划工具进行导航。</p>
+<p>对于操作技能，采用了模仿学习策略（A reduction of imitation learning<br>
+and structured prediction to no-regret online learning），使得复杂的动作如开微波炉或从冰箱中抓取物体成为可能。这涉及使用VR控制器，允许人类示教者以6自由度精确控制机器人的抓取器，并通过屏幕远程监控其摄像头视野。所收集的数据用于训练使用模仿学习的模型，输入包括RGB-D图像和机器人手臂的关节状态，并预测关节角度移动序列。每个原始动作平均收集30次轨迹演示，使用真实机器人进行。</p>
+<h2 id="conclusion"><a class="markdownIt-Anchor" href="#conclusion"></a> Conclusion</h2>
+<p>在本文中，我们提出了一种新颖的、动态的、可扩展的表示方法，用于在开放世界中进行任务规划。我们提出的表示方法根据<strong>可观察的动作不断扩展和更新对象属性，并利用LLM的上下文理解和历史动作推理能力</strong>。实验结果表明，我们提出的表示方法显著优于基准方法，提升了LLM的任务规划性能，尤其是在长时间任务上。展望未来，一个潜在的改进是<strong>将对象关系包含在状态表示中</strong>。这类信息可以极大地增强LLM的推理能力和上下文理解，解决更具挑战性的任务规划问题，并进一步提升性能。我们相信，所提出的表示方法为开放世界任务规划中的LLM未来研究提供了一个有前景的方向。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/" data-id="cm4v0xsc400002guu8rvsaray" data-title="LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+  
+</article>
+
+
+
+  
     <article id="post-计算机如何通信（不同局域网下）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/" class="article-date">
@@ -118,7 +256,7 @@
 <p><strong>公网IP</strong>：百度搜索IP，可在网页中查看到公网IP。</p>
 <p>如若二者一致，则可通过端口映射的方式，完成通信。</p>
 <p>在路由器管理界面的NAT设置处找到 端口映射 或者 虚拟服务器 设置。</p>
-<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89%5C1.jpg" alt="服务器与客户端代码输出"></p>
+<p><img src="https://ivel-Li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/1.jpg" alt="服务器与客户端代码输出"></p>
 <p>如上图，将对应WAN口下主机的内网IP和想使用的端口输入内部服务器IP和内部端口，外部端口尽量选择一个9000以上的数字。</p>
 <p>如此，就实现了将路由器公网IP的端口映射到局域网下对应端口的操作。</p>
 <p>此时的服务器与客户端代码：</p>
@@ -794,218 +932,6 @@
 
 
   
-    <article id="post-直到最后，我们也没有去看那片海" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="https://ivel-li.github.io/2024/11/26/%E7%9B%B4%E5%88%B0%E6%9C%80%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E6%B2%A1%E6%9C%89%E5%8E%BB%E7%9C%8B%E9%82%A3%E7%89%87%E6%B5%B7/" class="article-date">
-  <time class="dt-published" datetime="2024-11-26T06:39:13.000Z" itemprop="datePublished">2024-11-26</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a>►<a class="article-category-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="https://ivel-li.github.io/2024/11/26/%E7%9B%B4%E5%88%B0%E6%9C%80%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E6%B2%A1%E6%9C%89%E5%8E%BB%E7%9C%8B%E9%82%A3%E7%89%87%E6%B5%B7/">直到最后，我们也没有去看那片海</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <!-- 文章目录 -->
-        
-        <!-- Table of Contents -->
-        <p>我决意要写一篇小说。</p>
-<h2 id="幕一"><a href="#幕一" class="headerlink" title="幕一"></a>幕一</h2><p>冒出这个想法是在暑假结束前的第十天，其实在此之前，假期伊始，我曾规划好整个暑假的时间，去完成一部对我来说称得上“宏大”的中篇小说，奈何勉强拼凑出数万字的情节，才发现全篇都是别人的影子，所谓辛苦创作到头来不过是拾人牙慧。唏嘘之余，我并未放弃创作的想法，暑假行将结束的日子，跨过群山所见的海、夜奔的少年少女一并涌入我的梦境，我决意要写一篇小说，而且想好了标题——《直到最后，我们也没有去看那片海》，小说结尾处，主角将亲口道出这句话。</p>
-<p>下笔之前，构建出一个完整的大纲、理清故事脉络是不可或缺的步骤。所以我联系了旧时好友，希望和他能先商量着捣鼓出框架，接下来的日子慢慢填补小说内容。</p>
-<p>见面寒暄过后，我道明了来意，解释了目前的想法：“简而言之，就是在青春终末，少年少女相约去看海，却因为各种原因未能如愿的故事。”</p>
-<p>“你想写便写罢，毕竟我也说过，你写不下去的话，我会帮你完成一部分的。”</p>
-<p>“多谢。”</p>
-<p>接着我们讨论创作的细节，讨论完角色的大体设定和故事脉络，他开始完善大纲内容，而我提笔，开始描绘起方才在眼前浮现的情景。</p>
-<p><table><tr><td bgcolor="Beige"></td></tr></table></p>
-<pre><code>舷窗外飘起小雨，远处推着小车的保洁工身影逐渐模糊，直到融化成背景里的群青色斑点。机翼缓慢加速穿过雨幕，涡轮引擎呼啸悲鸣，要将他推离这片陌生的土地。
-
-或许是为了弥补彼时的遗憾，高考结束后A选择了这座临海城市，在这里度过短暂的大学时光。不只是太多琐事消耗掉他满腔的热情，或是自己选择了沉沦，溺死在一无所成的日子；隔着流逝的雨幕，他看着形形色色的人影走过，无数憧憬泛着光越飘越远，而那个看海的愿望，早不知飘向了何方。
-
-总而言之，直到他行将离开这座埋葬梦想的城市，座椅上倾脱离地面的一瞬，他才蓦地想起，那个为何至此的原因。
-
-其实机场离海不远，爬升到特定高度，透过舷窗也能望见海洋一角。只是靠海侧在相反方向，而当他想从座位站起，立即被空乘人员微笑着制止，说是爬升期间禁止离座，而他也讪讪笑了笑，又坐了回去。
-
-数年后，他回到故乡，与彼时好友相聚。席间觥筹交错，旧友相聊甚欢，谈笑间他无意问起最后那位坚持去看海的同伴：“所以最后你看到海了？”
-
-秃顶男人轻哼一声，把嘴里烧一半的华子直接掐灭到酒杯里，答道：“没呢，当时我在山里迷了路，遇上个好心人帮忙送了我回去。”
-
-“直到最后，我们还是没能去看那片海。”
-</code></pre><p>&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</p>
-<h2 id="幕二"><a href="#幕二" class="headerlink" title="幕二"></a>幕二</h2><p>“所以这个秃顶的是B？”</p>
-<p>“嗯呢。”</p>
-<p>“嗯——这是结尾部分A的自述？感觉最后的转折也太生硬了吧，数年后的部分给人一种很赶的感觉，最后一句话就像是作者写不下去了硬生生凑出来点题的。”</p>
-<p>“好像……确实是这样。”</p>
-<p>“你来看看我写的大纲。”友人招呼着我凑近笔记本屏幕。</p>
-<p>大纲开头处写着类似卷首语的东西：<br>    与其说想去看海，不如说是主人公们对于将要破笼而出，脱离一直束缚自己的小环境的迷茫。与其说梦想是什么，他们更想知道试着去做什么异想天开的事情——真正的幻想实现到底是什么样的。</p>
-<p>“你写的什么寄吧。”</p>
-<p>“凑合着看吧。”</p>
-<p>这段文字过后是人物设定以及剧情大纲。最初的讨论中，我们敲定了A、B、C三位主要人物的形象和关系，友人在方才填充了具体内容。</p>
-<pre><code>A（男）：成绩比较好。家里穷得叮当响，贼走一遭都得看可怜留点吃饭钱。性格较为木讷。（有时候也会想像自己这样条件的孩子，可能早就应该学坏了，父母收入不多，勉强够不饿死，而自己读书的机会是通过借钱争取来的，一到开学的时候就是挨家挨户借钱。学校里面的贷款只能勉强够补课费用，不过自己也曾幻想过自己沐浴在和风春日中，享受着大学美好时光。
-
-可是每当又因为吃校园里的饭菜的时候，内心深感麻木，每天都要顶着只能稍微饱腹的肚子，在同学们和老师面前强忍着对生活的不满。但是如果自己一意孤行，没有选择好的学校，势必会让家里人付出过分的努力。所以上大学和花费无用的钱去看海，简直就是同一种奢求。）
-
-B（男）：成绩比较差。纯纯富哥，奈何家教严格，总有一些不切实际的幻想。 （家教严苛，父母控制欲极强，生活环境压抑；读书的爱好给予了B度过这段晦暗光阴的力量，也让他拥有了许多憧憬与期许）
-
-C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱恋，平时在大家面前不爱说话，但是却愿意同A与B多聊上几句，甚至会特意打招呼。在看海的事情上，与其说是想去看海，其实只是不想被A、B丢下，至少能跟其中一个人呆在一块就好。
-
-父亲是货车司机，母亲则在乡下种地或者找零活，跟A一样都是长期在学校吃饭的类型，平时自己住在姑妈家里面。）
-</code></pre><p>“富哥成绩较好，A成绩较差会更好一些。”</p>
-<p>“富哥骄奢淫逸成绩垫底才对吧。”</p>
-<p>“但是家境好的成绩好才更合理一些吧。”</p>
-<p>“……行吧。”</p>
-<p>“而且A后面补充的设定也太离谱了，现在谁还读高中靠挨家挨户借钱？首先高中学费本来就很少，而且还有各类助学金。这样写也太刻意了。我觉得除非你写A家里有什么变故，不然根本立不住脚。”</p>
-<p>“那我再改改。”</p>
-<p>“按我们之前的想法，A家里没必要设定这么困难，倒是家里突生变故的情节可以写到C上面……还有我们加上些生活细节会更好吧，像是A和B喜欢在晚饭后坐在操场边上边看人们踢球边聊天，C喜欢在课间折纸鹤之类的。”</p>
-<p>“明白你意思了，那我之后再改改。”</p>
-<p>“我写个开头先。”</p>
-<pre><code>“呐，要不要去看海。”
-
-昏黄与惨绿交织的背景里，模糊的人影倚在窗前，摆弄着奇怪的手势，不时做捂嘴或捧腹状；依稀能听到它与某人的谈笑声，另一人应该藏在墙壁转角处，恰巧在我视野之外。
-
-“你有没有听啊。”
-
-肩上突然被托付了重量，接着是剧烈的摇晃，强迫着我面对那个声音。
-
-“停停停，你刚才说啥。”
-
-“ 我说，要不要去看海。”
-
-“海？”
-
-“离我们这两百公里不是有一片内海嘛。下个月就高三分班了，周末要不要一起去看。”
-
-“嗯......我再考虑考虑。你现在找了哪些人？”
-
-“我现在只找了你，要不你问问C？她应该会愿意和我们一起去吧。”
-
-我侧过头，往C的方向望去。我和她的座位都靠窗，唯一的区别在于，我在教室这头，她在教室那头。她坐在黄昏的暮光中，认真折着纸鹤——不知是何缘故，最近她卖了一大沓便利贴放在桌角，一有空闲便揭下一张开始折纸鹤，折完便随手丢入脚边的玻璃罐里。前几天她给我看过，玻璃罐里堆着五颜六色的纸鹤，大概占据了2/3的空间，她低着头说再过几天应该就填满了，言语里藏着莫名的笑意。
-
-“那我等会问问她吧。你有什么具体的计划吗？”
-
-“分班考试后我们有一天的假，考试最后一天晚上我们做直通班车到那，第二天玩到十点再坐最后一天班车回家。”
-
-“我家里管得严，但空一天还是能圆过去的。”他又补充了一句。
-
-“好的，快上课了，这事过几天再说吧。”
-</code></pre><p>在我尝试完成意义不明的开头期间，友人整理了剧情大纲的部分。按照最初的想法，应该分为“打算去看海-&gt;计划坐班车，结果受到阻碍-&gt;解决交通工具的问题，出发去看海-&gt;没能看到海”这四个部分，友人完善了每部分的大致内容，准确来说，是将我们讨论的内容付诸笔墨。</p>
-<p>“我觉得交通工具可以写成A通过撒谎等方式从叔叔或者舅舅家套来了一辆宝马摩托车。不过说是宝马，其实是他叔叔从网上买了个车标然后贴上去的。”</p>
-<p>“所以为什么是宝马？”</p>
-<p>“不知道……随便想的。”</p>
-<p>之后，我们……嗯，抱歉，由于这篇文章本质上是回忆往事，而我现在急着跑去下云顶之弈，因此减弱了几分回忆的能力。稍等……哦，我想起来了，在那个漫长的夏日午后余下的时光里，我下了两把云顶之弈。</p>
-<h2 id="幕三"><a href="#幕三" class="headerlink" title="幕三"></a>幕三</h2><pre><code>最后他们准备好了一切，可惜一切并不顺利，首先是打工消磨了时间，其次是司机并不熟悉路线，所以在很多陌生的小乡村里面乱逛，在乡间小路里面穿行。经过几天，本地人恶意加价的油量，出租车上度过的廉价夜晚，让其中一个少年在突出重围的征程中选择了逃避，趁车辆维修，泡在了网吧里面，嘴里说着“打最后一把云顶之奕，我马上就铂金段位，打完就精力饱满地去看海。”
-
-结果另一个少年，在朋友圈发布高中最后的暑假看了海，而网瘾少年连泡两夜网吧后，顺利地抵达钻石段位。当少年从网吧取下耳机，感叹高中无憾时，这时才发现自己被父母围住，突然才发现自己好像还没去看海。
-
-至此，俩人因为高考被强行困在家中。
-
-多年后，当年的网瘾少年问起：“你当年看到了海吗？”
-
-另一个少年掏出手机，让他看看手机里面的图片，只听对方一句：“这不是网图吗？”
-
-“你发现了呀，当年滥竽充数罢了。”
-
-“可惜了......”
-
-“直到最后，我们也没有去看那片海。”
-</code></pre><p>“我要把你下云顶写进小说里。”</p>
-<p>没错，此时这篇小说已经完全变成了两人共同创作的产物，一个人写根本没有写作的动力，毕竟赚不了钱。</p>
-<p>“哎呀，磨刀不误砍柴工嘛。我本来灵感枯竭，这多下几把云顶这不就文思泉涌了。”</p>
-<p>“那让我看看你写了啥。”</p>
-<p>“我给你发过去了，主要是一些人物背景的补充和大纲内容的完善，比如为了表现B的背景我打算这么写。”</p>
-<pre><code>母亲夹一块鱼肚皮放在B碗里。 
-
-“你看，妈妈每次都把最好吃的夹给你，鱼肚皮我们都舍不得吃的。” 
-
-“嗯嗯” 
-
-“我怕就怕你以后出息了就把你爹娘忘了。” 
-
-“怎么会呢....” 
-
-“哼，之前我们单位里有家孩子读完清华本科就去美国了，去年他爸死了尸体在老家晾一周，他才回来，回来呆三天就又回美国了。你说养这种孩子是不是不如不养，我怕就怕你变成这种白眼狼。”（父亲撑起手肘点烟，故作高深的嘴脸）
-
-“啊嗯......” 
-
-“分班考试准备的咋样？我看你上次排名又退步了，高三了还整天偷偷看那些闲书……” 
-
-“乔治奥威尔怎么算闲书……”（声音逐渐低下去）
-
-“你说什么？” 
-
-“没什么。”
-
-“你但凡把你看那些鬼书的时间花一般在学习上，成绩不得好很多？还是你懒、花的功夫少。”
-
-“其实妈妈相信你的，我和你爸小时候读书都那么聪明，你肯定会比我们更好；我初中本来成绩一般，但我就一直不服输，然后考了全校第二，当时……”
-
-“你再怎么说不也就是个中专，即使按全县的排名我不比你们当时好？”
-
-“你怎么说话的……”
-
-“我们当时才多少人读书；你读书的条件，比我们好得多啊，我就记得当时每周从学校回来还得顺便劈框柴回家……”
-
-“不是，我对比的是全县排名，我们人多不说明我这含金量更高吗？”
-
-“你读这么多书啥什么都没学到，就学会顶嘴了？那这书不如不读。”
-
-“你怎么这么不谦虚。”
-
-“……我去放碗。”
-</code></pre><p>“什么照镜子环节。”</p>
-<p>“确实有从生活实际改编的部分，嗯不过我感觉还是不太到位，好像不够压抑吧。”</p>
-<p>“那么，你现在打算怎么办。”友人往后一仰，像海星一般瘫坐到床上：“啊——一点都不想动了。”</p>
-<p>“别啊，你这样我都开始想打云顶之弈了。”</p>
-<p>……</p>
-<h2 id="幕四"><a href="#幕四" class="headerlink" title="幕四"></a>幕四</h2><p>故事发展最终敲定为：邻近故事结局，由于某些突发情况（与之前折千纸鹤的原因相呼应），C不得不提前回家，但B坚持想去看海，于是三人间出现分歧，A踌躇片刻后决定先送C回家，三人分道扬镳。</p>
-<pre><code>她偎依在我身后，臂弯环绕在胸前。我能感受到她手臂的温度，和耳边若隐若现的呼吸声。拂面冷风带走夏夜的燥热，路灯的影子延伸到道路尽头。 那个瞬间，我感觉自己就是世界的皇帝，架起车辇纵横捭阖，身后是千军万马和挚爱的女人；我挥起长剑，要踏平世界的角落。群山在我脚下臣服，夜幕燃成银河，照亮征伐的道路。我听见她说，想要就一直、一直这样下去，直到世界尽头。
-
-但我没有千军万马，也没有挥斥宇内的宝剑，一切少年的臆想都如同叔叔为附庸风雅而贴上的宝马车标，在不经意间被风吹剥落，暴露出原本的穷酸模样。在离家大概5公里处，我的车辇终是油尽灯枯，再也点不上火；我和C推着摩托车不知走了多久，一路上相对无言。在途径学校门口处，我向她挥手告别，我们不再顺路，要回到不同的地方。她迟疑了一会，把手上的红绳解下，系在我的手腕上；她向我告别，消失在小巷的阴影里。
-
-多年后我曾质问自己，到底有没有喜欢过那个爱在窗边默默折千纸鹤的女孩，奈何过往的记忆早已支离破碎，再难拼凑出事件的原貌，我找不到问题的答案。但我可以肯定的是，至少在那个叛逃的夜晚，我只想牵起那女孩的手，和她一起逃离，直到世界和时间尽头。
-</code></pre><p>“那么，其他部分呢？”</p>
-<p>“其他部分？”</p>
-<p>“比如A是怎么骗到叔叔的摩托车的，以及C接到的电话里到底说了什么，还有……哎呀就中间发生的所有情节你压根就没写嘛。”</p>
-<p>“我不知道。”</p>
-<p>“不知道？”</p>
-<p>秋风敲打着窗棂灌了进来，捎来泛黄的梧桐叶。</p>
-<p>“因为实际上故事尚未发生就结束了。在那个夏天结束之前，两位作者并没能把故事写完。这场对话，也只是过后虚构的产物。”</p>
-<p>“……”</p>
-<p>“直到最后，我们也没有去看那片海”</p>
-<p align="right" color="grey">By ivel, nas</p>
-
-<p align="right">2023/4/28</p>
-
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://ivel-li.github.io/2024/11/26/%E7%9B%B4%E5%88%B0%E6%9C%80%E5%90%8E%EF%BC%8C%E6%88%91%E4%BB%AC%E4%B9%9F%E6%B2%A1%E6%9C%89%E5%8E%BB%E7%9C%8B%E9%82%A3%E7%89%87%E6%B5%B7/" data-id="cm3y4k1vf000yhouu6umd6cyx" data-title="直到最后，我们也没有去看那片海" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-  
-</article>
-
-
-
-  
 
 
   <nav id="page-nav">
@@ -1021,7 +947,7 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/">文字</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E5%BD%B1%E8%AF%84/">影评</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/">短篇小说</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E7%9F%AD%E7%AF%87%E5%B0%8F%E8%AF%B4/%E5%B9%95%E9%97%B4/">幕间</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%96%87%E5%AD%97/%E9%9A%8F%E7%AC%94/">随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%90%86%E8%AE%BA%E4%B8%8Etrick/">网络基础理论与trick</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/">笔记</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/">论文</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Prompt-Engineering/">Prompt Engineering</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87/Robot-Learning/">Robot Learning</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/">计算机科学</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E5%AE%9E%E7%94%A8%E7%9F%A5%E8%AF%86%E4%B8%8E%E5%B7%A5%E5%85%B7/">实用知识与工具</a></li><li class="category-list-item"><a class="category-list-link" href="https://ivel-li.github.io/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></li></ul></li></ul>
     </div>
   </div>
 
@@ -1049,6 +975,10 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
       <ul>
         
           <li>
+            <a href="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/">LLM-State:Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model</a>
+          </li>
+        
+          <li>
             <a href="https://ivel-li.github.io/2024/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%A6%82%E4%BD%95%E9%80%9A%E4%BF%A1%EF%BC%88%E4%B8%8D%E5%90%8C%E5%B1%80%E5%9F%9F%E7%BD%91%E4%B8%8B%EF%BC%89/">计算机如何通信（不同局域网下）</a>
           </li>
         
@@ -1062,10 +992,6 @@ C（女）：成绩一般。寡言少语。（对于A有模糊但却强烈的爱
         
           <li>
             <a href="https://ivel-li.github.io/2024/11/28/robot-learning-lab-note/">robot learning lab note</a>
-          </li>
-        
-          <li>
-            <a href="https://ivel-li.github.io/2024/11/27/DINOBoT-Robot-Manipulation-via-Retrieval-and-Alignment-with-Vision-Foundation-Models/">DINOBoT: Robot Manipulation via Retrieval and Alignment with Vision Foundation Models</a>
           </li>
         
       </ul>
