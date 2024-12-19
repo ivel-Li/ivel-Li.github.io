@@ -19,7 +19,7 @@
 <meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/4.jpg">
 <meta property="og:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/5.jpg">
 <meta property="article:published_time" content="2024-12-18T08:19:24.000Z">
-<meta property="article:modified_time" content="2024-12-19T07:52:36.844Z">
+<meta property="article:modified_time" content="2024-12-19T08:13:58.088Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ivel-li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/1.jpg">
@@ -165,19 +165,12 @@ ceedings of the IEEE Conference on Computer Vision and Pattern<br>
 Recognition, 2018, pp. 8494–8502）来评价我们的方法。我们关注任务规划的性能，并用仿真API调用替换了感知模块和低级控制器。观测和动作空间的具体细节可以在第三部分中查看。机器人可以检测到同一房间内的物体，但无法检测到封闭容器内的物体。实验在5张房屋地图中进行，如图5所示，每张地图包含15个任务。任务被分为简单(少于30个步骤) 和困难 (多于30个步骤) 水平的综合评估。</p>
 <p>我们将我们的方法与3个基线进行比较：InnerMonologue <a href>4</a>，ProgPrompt [5]，以及不带我们的LLM-State表示的LLM的一个简单版本。InnerMonologue在长跨度任务中经常超过最大token限制。为了解决这个问题，我们维护了一个窗口，称为InnerMonologue-W。这个问题在使用长历史观察和行动作为状态的方法中很常见。ProgPrompt生成代码而不是自由形式的文本来执行任务计划。为了公平比较，我们还为ProgPrompt添加了重新计划过程。对于简单的LLM，我们将观察和行动历史直接提示给LLM，类似于以前的工作 [6]。</p>
 <div style="background-color: #f0f0f0; padding: 10px; border-radius: 5px;">
-[4]W. Huang, F. Xia, T. Xiao, H. Chan, J. Liang, P. Florence, A. Zeng,
+[4] W. Huang, F. Xia, T. Xiao, H. Chan, J. Liang, P. Florence, A. Zeng,
 J. Tompson, I. Mordatch, Y. Chebotar et al., “Inner monologue:
 Embodied reasoning through planning with language models,” in
 Conference on Robot Learning. PMLR, 2023, pp. 1769–1782.
-<p>[5] I. Singh, V. Blukis, A. Mousavian, A. Goyal, D. Xu, J. Tremblay,<br>
-D. Fox, J. Thomason, and A. Garg, “Progprompt: Generating situated<br>
-robot task plans using large language models,” in 2023 IEEE Interna-<br>
-tional Conference on Robotics and Automation (ICRA). IEEE, 2023,<br>
-pp. 11 523–11 530.</p>
-<p>[6] C. H. Song, J. Wu, C. Washington, B. M. Sadler, W.-L. Chao,<br>
-and Y. Su, “Llm-planner: Few-shot grounded planning for embodied<br>
-agents with large language models,” in Proceedings of the IEEE/CVF<br>
-International Conference on Computer Vision (ICCV), October 2023</p>
+<p>[5] I. Singh, V. Blukis, A. Mousavian, A. Goyal, D. Xu, J. Tremblay, D. Fox, J. Thomason, and A. Garg, “Progprompt: Generating situated robot task plans using large language models,” in 2023 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2023, pp. 11 523–11 530.</p>
+<p>[6] C. H. Song, J. Wu, C. Washington, B. M. Sadler, W.-L. Chao, and Y. Su, “Llm-planner: Few-shot grounded planning for embodied agents with large language models,” in Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), October 2023</p>
 </div>
 <p><img src="https://ivel-Li.github.io/2024/12/18/LLM-State-Open-World-State-Representation-for-Long-horizon-Task-Planning-With-Large-Language-Model/2.jpg" alt="框架总览"></p>
 <ol start="2">
